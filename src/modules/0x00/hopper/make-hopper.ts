@@ -1,5 +1,6 @@
 import { BoxGeometry, Group, Mesh, MeshPhongMaterial } from "three";
 
+import { makePointLight } from "../make-point-light";
 import type { Hopper } from "../types/Hopper";
 
 export const makeHopper = (): Hopper => {
@@ -43,6 +44,10 @@ export const makeHopper = (): Hopper => {
     },
     stepTime: 0.4,
   };
+
+  const pointLight = makePointLight();
+
+  hopper.rendering.add(pointLight);
 
   return hopper;
 };
