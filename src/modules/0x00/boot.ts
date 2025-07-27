@@ -77,7 +77,7 @@ export const boot = ({
 
   const runLogicLoop = makeLogicLoop({
     commands,
-    fixedTimeStep: 1000 / 30,
+    fixedTimeStep: 1000 / 60,
     hopper,
     hopperCommands,
     input,

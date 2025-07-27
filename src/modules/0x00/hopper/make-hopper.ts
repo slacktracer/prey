@@ -32,7 +32,7 @@ export const makeHopper = (): Hopper => {
     height,
     moving: false,
     position: {
-      cameraLagFactor: 0.15,
+      cameraLagFactor: 0.5,
       current: { x: 0, y: 0, z: 0 },
       target: { x: 0, y: 0, z: 0 },
     },
@@ -42,7 +42,7 @@ export const makeHopper = (): Hopper => {
       current: { x: 0, y: 0, z: 0 },
       target: { x: 0, y: 0, z: 0 },
     },
-    stepTime: 0.4,
+    stepTime: 0.2,
   };
 
   const pointLight = makePointLight();
