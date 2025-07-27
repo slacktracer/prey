@@ -1,5 +1,4 @@
-<h1>Welcome to SvelteKit</h1>
+<h1>Prey</h1>
 <p>
-  Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read
-  the documentation
+  <a href="/0x00">0x00</a>
 </p>

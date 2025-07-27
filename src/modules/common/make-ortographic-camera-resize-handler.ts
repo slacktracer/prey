@@ -1,7 +1,7 @@
 import { getBottomLeftRightTop } from "./get-bottom-left-right-top.js";
 
-export const makeOrthographicResizeHandler =
-  ({ camera, renderer, edgeSize }) => () => {
+export const makeOrthographicCameraResizeHandler =
+  ({ edgeSize, orthographicCamera, renderer }) => () => {
     const aspect = window.innerWidth / window.innerHeight;
 
     const height = edgeSize;
@@ -9,10 +9,10 @@ export const makeOrthographicResizeHandler =
     const width = height * aspect;
 
     Object.entries(getBottomLeftRightTop({ height, width })).map(
-      ([key, value]) => (camera[key] = value),
+      ([key, value]) => (orthographicCamera[key] = value),
     );
 
-    camera.updateProjectionMatrix();
+    orthographicCamera.updateProjectionMatrix();
 
     renderer.setSize(window.innerWidth, window.innerHeight);
   };
