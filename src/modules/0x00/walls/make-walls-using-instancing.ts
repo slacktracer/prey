@@ -1,14 +1,13 @@
 import { BoxGeometry, InstancedMesh, Matrix4, MeshPhongMaterial } from "three";
 
+import { state } from "../state/state.js";
+
 export const makeWallsUsingInstancing = ({ map }) => {
-  const wallHeight = 5;
+  const wallHeight = state.wall.height;
 
   const wallGeometry = new BoxGeometry(1, 1, wallHeight);
 
-  const wallMaterial = new MeshPhongMaterial({
-    color: 0x38393f,
-    flatShading: true,
-  });
+  const wallMaterial = new MeshPhongMaterial(state.wall.material);
 
   let instanceCount = 0;
 

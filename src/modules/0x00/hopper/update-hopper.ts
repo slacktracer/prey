@@ -84,8 +84,6 @@ export const updateHopper = ({
     progress,
   );
 
-  hopper.rendering.position.z = Math.sin(progress * Math.PI) * 0.5;
-
   hopper.rendering.rotation.z = MathUtils.lerp(
     hopper.rendering.rotation.z,
     hopper.rotation.target.z,

@@ -18,6 +18,7 @@ export const makeHopper = (): Hopper => {
   );
 
   // hopperRendering.castShadow = true;
+
   hopperRendering.receiveShadow = true;
 
   hopperRendering.position.z += height / 2;

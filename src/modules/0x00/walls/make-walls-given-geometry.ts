@@ -1,12 +1,9 @@
 import { Mesh, MeshPhongMaterial } from "three";
 
+import { state } from "../state/state.js";
+
 export const makeWallsGivenGeometry = ({ wallsGeometry }) => {
-  const wallsMaterial = new MeshPhongMaterial({
-    color: 0x38393f,
-    flatShading: true,
-    transparent: true,
-    opacity: 0.9,
-  });
+  const wallsMaterial = new MeshPhongMaterial(state.wall.material);
 
   const walls = new Mesh(wallsGeometry, wallsMaterial);
 

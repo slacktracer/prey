@@ -1,8 +1,10 @@
 import { BoxGeometry, Mesh } from "three";
 import { ADDITION, Brush, Evaluator } from "three-bvh-csg";
 
+import { state } from "../state/state.js";
+
 export const makeWallsGeometryDataUsingCSG = ({ map }) => {
-  const wallHeight = 5;
+  const wallHeight = state.wall.height;
 
   const offsetX = map[0].length / 2 - 0.5;
 
