@@ -1,0 +1,6 @@
+{
+  "*.js": ["deno fmt", "eslint --cache --fix"],
+  "*.json": ["deno fmt"],
+  "*.svelte": ["deno fmt", "eslint --cache --fix"],
+  "*.ts": ["deno fmt", "eslint --cache --fix"]
+}
