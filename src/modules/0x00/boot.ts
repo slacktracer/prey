@@ -1,4 +1,4 @@
-import { Group, Scene } from "three";
+import { AmbientLight, Group, Scene } from "three";
 
 import { makeOrthographicCameraResizeHandler } from "../common/make-ortographic-camera-resize-handler.js";
 import { makeHopper } from "./hopper/make-hopper.js";
@@ -19,9 +19,11 @@ import { addWallsToScene } from "./walls/add-walls-to-scene.js";
 export const boot = ({
   container,
   orbitControlsOn = false,
+  ambientLightOn = true,
 }: {
   container: HTMLDivElement;
   orbitControlsOn: boolean;
+  ambientLightOn: boolean;
 }) => {
   const mapIsValid = isMapValid({ map });
 
@@ -39,11 +41,17 @@ export const boot = ({
 
   scene.add(groundPlane);
 
+  if (ambientLightOn) {
+    const ambientLight = new AmbientLight(0xffffff, 0.5); // Soft white light
+    scene.add(ambientLight);
+  }
+
   addWallsToScene({ map, scene });
 
   const edgeSize = 15;
 
   const orthographicCamera = makeOrthographicCamera({ edgeSize });
+  // const orthographicCamera = makeOrthographicCamera({ edgeSize });
 
   scene.add(orthographicCamera);
 
