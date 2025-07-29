@@ -1,100 +1,97 @@
 import { Clock, MathUtils } from "three";
 
-import type { Commands } from "../types/Commands";
 import type { Hopper } from "../types/Hopper";
-import { getForward } from "./get-forward";
-import { hopperCommands } from "./hopper-commands";
 import { isStepAllowed } from "./is-step-allowed";
 
-let clock = new Clock(false);
+let animationClock = new Clock(false);
 
 export const updateHopper = ({
-  commands,
   hopper,
+  input,
   map,
 }: {
-  commands: Commands["hopper"];
   hopper: Hopper;
+  input: { pressedKeys: Record<string, boolean> };
   map: number[][];
 }) => {
-  const command = commands.values().next().value;
+  const now = performance.now() / 1000; // a time in seconds
+  const keyIsPressed = Object.values(input.pressedKeys).some((v) => v);
 
-  if (commands.size && hopper.moving === false) {
-    switch (command) {
-      case hopperCommands.backward:
-        hopper.moving = true;
+  // Logic to start a new move
+  // A move can start if a key is pressed AND enough time has passed since the last move was initiated.
+  if (
+    !hopper.moving && keyIsPressed &&
+    (now - hopper.lastMoveInitiationTime > (hopper.stepTime + hopper.cooldown))
+  ) {
+    // Before starting a new move, ensure the current position is synced with the target from the last move.
+    hopper.position.current.x = hopper.position.target.x;
+    hopper.position.current.y = hopper.position.target.y;
 
-        hopper.rotation.target.z = hopper.rendering.rotation.z + Math.PI;
+    let moved = false;
+    let potentialTargetX = hopper.position.current.x;
+    let potentialTargetY = hopper.position.current.y;
 
+    // Determine potential next target based on input
+    switch (true) {
+      case input.pressedKeys.ArrowDown:
+        potentialTargetX += 1;
         break;
-
-      case hopperCommands.left:
-        hopper.moving = true;
-
-        hopper.rotation.target.z = hopper.rendering.rotation.z + Math.PI / 2;
-
+      case input.pressedKeys.ArrowLeft:
+        potentialTargetY -= 1;
         break;
-
-      case hopperCommands.right:
-        hopper.moving = true;
-
-        hopper.rotation.target.z = hopper.rendering.rotation.z + -(Math.PI / 2);
-
+      case input.pressedKeys.ArrowRight:
+        potentialTargetY += 1;
         break;
-
-      case hopperCommands.forward:
-        {
-          const [axis, direction] = getForward({
-            rotation: hopper.rendering.rotation.z,
-          });
-
-          hopper.position.target[axis] += direction;
-
-          if (isStepAllowed({ hopper, map }) === false) {
-            hopper.position.target[axis] -= direction;
-
-            break;
-          }
-        }
-
-        hopper.moving = true;
-
+      case input.pressedKeys.ArrowUp:
+        potentialTargetX -= 1;
         break;
+    }
 
-      default:
-        console.warn("unknown command", command);
+    // Temporarily set target to check if step is allowed
+    hopper.position.target.x = potentialTargetX;
+    hopper.position.target.y = potentialTargetY;
+
+    if (isStepAllowed({ hopper, map })) {
+      moved = true;
+    } else {
+      // Revert to original target if not allowed
+      hopper.position.target.x = hopper.position.current.x;
+      hopper.position.target.y = hopper.position.current.y;
+    }
+
+    if (moved) {
+      hopper.moving = true;
+      hopper.lastMoveInitiationTime = now; // Update last move initiation time
+      animationClock = new Clock(true); // Start animation clock for the new move
     }
   }
 
-  if (!clock.running && hopper.moving) {
-    clock.start();
-  }
+  // Logic to update position during a move
+  if (hopper.moving) {
+    const progress = Math.min(
+      1,
+      animationClock.getElapsedTime() / hopper.stepTime,
+    );
 
-  const progress = Math.min(1, clock.getElapsedTime() / hopper.stepTime);
+    hopper.rendering.position.x = MathUtils.lerp(
+      hopper.position.current.x,
+      hopper.position.target.x,
+      progress,
+    );
+    hopper.rendering.position.y = MathUtils.lerp(
+      hopper.position.current.y,
+      hopper.position.target.y,
+      progress,
+    );
 
-  hopper.rendering.position.x = MathUtils.lerp(
-    hopper.rendering.position.x,
-    hopper.position.target.x,
-    progress,
-  );
-
-  hopper.rendering.position.y = MathUtils.lerp(
-    hopper.rendering.position.y,
-    hopper.position.target.y,
-    progress,
-  );
-
-  hopper.rendering.rotation.z = MathUtils.lerp(
-    hopper.rendering.rotation.z,
-    hopper.rotation.target.z,
-    progress,
-  );
-
-  if (progress >= 1) {
-    hopper.moving = false;
-
-    clock.stop();
-
-    clock = new Clock(false);
+    if (progress >= 1) {
+      hopper.moving = false;
+      // Snap to target position to avoid floating point inaccuracies
+      hopper.position.current.x = hopper.position.target.x;
+      hopper.position.current.y = hopper.position.target.y;
+      hopper.rendering.position.x = hopper.position.target.x;
+      hopper.rendering.position.y = hopper.position.target.y;
+      animationClock.stop();
+    }
   }
 };

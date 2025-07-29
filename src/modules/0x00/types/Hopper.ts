@@ -13,4 +13,5 @@ export type Hopper = {
     target: { x: number; y: number; z: number };
   };
   stepTime: number;
+  lastMoveInitiationTime: number;
 };

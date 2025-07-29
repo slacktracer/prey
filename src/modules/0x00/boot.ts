@@ -1,8 +1,6 @@
 import { Group, Scene } from "three";
 
 import { makeOrthographicCameraResizeHandler } from "../common/make-ortographic-camera-resize-handler.js";
-import { commands } from "./commands.js";
-import { hopperCommands } from "./hopper/hopper-commands.js";
 import { makeHopper } from "./hopper/make-hopper.js";
 import { updateHopper } from "./hopper/update-hopper.js";
 import { input } from "./input.js";
@@ -14,7 +12,6 @@ import { makePointLight } from "./make-point-light.js";
 import { makeRenderer } from "./make-renderer.js";
 import { isMapValid } from "./maps/is-map-valid.js";
 import { map } from "./maps/map.js";
-import { parseInputIntoCommands } from "./parse-input-into-commands.js";
 import { setUpOrbitControls } from "./set-up-orbit-controls.js";
 import { startCollectingInput } from "./start-collecting-input.js";
 import { addWallsToScene } from "./walls/add-walls-to-scene.js";
@@ -76,14 +73,11 @@ export const boot = ({
   }
 
   const runLogicLoop = makeLogicLoop({
-    commands,
     fixedTimeStep: 1000 / 60,
     hopper,
-    hopperCommands,
     input,
     map,
     maximumNumberOfSubsteps: 5,
-    parseInputIntoCommands,
     time: {
       accumulator: 0,
       lastUpdateTime: performance.now(),

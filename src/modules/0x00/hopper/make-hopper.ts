@@ -43,6 +43,8 @@ export const makeHopper = (): Hopper => {
       target: { x: 0, y: 0, z: 0 },
     },
     stepTime: 0.2,
+    cooldown: 0.2,
+    lastMoveInitiationTime: -Infinity,
   };
 
   const pointLight = makePointLight();

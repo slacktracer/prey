@@ -2,7 +2,7 @@ import { Color } from "three";
 
 export const state = {
   wall: {
-    height: 15,
+    height: 8,
     material: {
       color: 0x38393f,
       flatShading: true,

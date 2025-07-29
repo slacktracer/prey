@@ -1,12 +1,9 @@
 export const makeLogicLoop = ({
-  commands,
   fixedTimeStep,
   hopper,
-  hopperCommands,
   input,
   map,
   maximumNumberOfSubsteps,
-  parseInputIntoCommands,
   time,
   updateHopper,
 }) => {
@@ -30,9 +27,7 @@ export const makeLogicLoop = ({
       time.accumulator >= fixedTimeStep &&
       numberOfSubstepsTaken < maximumNumberOfSubsteps
     ) {
-      parseInputIntoCommands({ commands, hopperCommands, input });
-
-      updateHopper({ commands: commands.hopper, hopper, map });
+      updateHopper({ hopper, input, map });
 
       time.accumulator -= fixedTimeStep;
 
