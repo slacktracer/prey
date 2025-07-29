@@ -15,10 +15,8 @@ export const makeOrthographicCamera = ({ edgeSize }) => {
 
   const camera = new OrthographicCamera(left, right, top, bottom, near, far);
 
-  camera.position.set(10, -5, 200);
+  camera.position.set(10, 200, -5);
   // camera.position.set(-10, -40, 100);
-
-  camera.up.set(0, 0, 1);
 
   camera.lookAt(0, 0, 0);
 

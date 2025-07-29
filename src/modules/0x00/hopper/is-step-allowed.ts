@@ -9,18 +9,18 @@ export const isStepAllowed = ({ hopper, map }) => {
     xAxisOffset = (xAxisLength - 1) / 2;
   }
 
-  const yAxisLength = map.length;
+  const zAxisLength = map.length;
 
-  let yAxisOffset: number;
+  let zAxisOffset: number;
 
-  if (yAxisLength % 2 === 0) {
-    yAxisOffset = (yAxisLength - 2) / 2;
+  if (zAxisLength % 2 === 0) {
+    zAxisOffset = (zAxisLength - 2) / 2;
   } else {
-    yAxisOffset = (yAxisLength - 1) / 2;
+    zAxisOffset = (zAxisLength - 1) / 2;
   }
 
   return (
-    map[hopper.position.target.y + yAxisOffset][
+    map[hopper.position.target.z + zAxisOffset][
       hopper.position.target.x + xAxisOffset
     ] !== 1
   );

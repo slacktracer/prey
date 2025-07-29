@@ -21,11 +21,11 @@ export const makeWallsGeometryDataUsingCSG = ({ map }) => {
   for (let i = 0; i < map.length; i += 1) {
     for (let j = 0; j < map[i].length; j += 1) {
       if (map[i][j] === 1) {
-        const wallBlockGeometry = new BoxGeometry(1, 1, wallHeight);
+        const wallBlockGeometry = new BoxGeometry(1, wallHeight, 1);
 
         const brush = new Brush(wallBlockGeometry);
 
-        brush.position.set(j - offsetX, i - offsetY, wallHeightOffset);
+        brush.position.set(j - offsetX, wallHeightOffset, i - offsetY);
 
         brush.updateMatrixWorld(true);
 

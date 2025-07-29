@@ -5,7 +5,7 @@ import { state } from "../state/state.js";
 export const makeWallsUsingInstancing = ({ map }) => {
   const wallHeight = state.wall.height;
 
-  const wallGeometry = new BoxGeometry(1, 1, wallHeight);
+  const wallGeometry = new BoxGeometry(1, wallHeight, 1);
 
   const wallMaterial = new MeshPhongMaterial(state.wall.material);
 
@@ -39,7 +39,7 @@ export const makeWallsUsingInstancing = ({ map }) => {
   for (let i = 0; i < map.length; i += 1) {
     for (let j = 0; j < map[i].length; j += 1) {
       if (map[i][j] === 1) {
-        dummy.setPosition(j - offsetX, i - offsetY, wallHeightOffset);
+        dummy.setPosition(j - offsetX, wallHeightOffset, i - offsetY);
 
         walls.setMatrixAt(instanceIndex, dummy);
 

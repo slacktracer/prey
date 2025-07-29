@@ -22,7 +22,8 @@ export const makeHopper = (): Hopper => {
 
   hopperRendering.receiveShadow = true;
 
-  hopperRendering.position.z += height / 2;
+  hopperRendering.rotation.x = Math.PI / 2;
+  hopperRendering.position.y += height / 2;
 
   const hopperRenderingGroup = new Group();
 

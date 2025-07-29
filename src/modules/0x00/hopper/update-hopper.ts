@@ -25,38 +25,38 @@ export const updateHopper = ({
   ) {
     // Before starting a new move, ensure the current position is synced with the target from the last move.
     hopper.position.current.x = hopper.position.target.x;
-    hopper.position.current.y = hopper.position.target.y;
+    hopper.position.current.z = hopper.position.target.z;
 
     let moved = false;
     let potentialTargetX = hopper.position.current.x;
-    let potentialTargetY = hopper.position.current.y;
+    let potentialTargetZ = hopper.position.current.z;
 
     // Determine potential next target based on input
     switch (true) {
+      case input.pressedKeys.ArrowUp:
+        potentialTargetX -= 1;
+        break;
       case input.pressedKeys.ArrowDown:
         potentialTargetX += 1;
         break;
       case input.pressedKeys.ArrowLeft:
-        potentialTargetY -= 1;
+        potentialTargetZ += 1;
         break;
       case input.pressedKeys.ArrowRight:
-        potentialTargetY += 1;
-        break;
-      case input.pressedKeys.ArrowUp:
-        potentialTargetX -= 1;
+        potentialTargetZ -= 1;
         break;
     }
 
     // Temporarily set target to check if step is allowed
     hopper.position.target.x = potentialTargetX;
-    hopper.position.target.y = potentialTargetY;
+    hopper.position.target.z = potentialTargetZ;
 
     if (isStepAllowed({ hopper, map })) {
       moved = true;
     } else {
       // Revert to original target if not allowed
       hopper.position.target.x = hopper.position.current.x;
-      hopper.position.target.y = hopper.position.current.y;
+      hopper.position.target.z = hopper.position.current.z;
     }
 
     if (moved) {
@@ -78,9 +78,9 @@ export const updateHopper = ({
       hopper.position.target.x,
       progress,
     );
-    hopper.rendering.position.y = MathUtils.lerp(
-      hopper.position.current.y,
-      hopper.position.target.y,
+    hopper.rendering.position.z = MathUtils.lerp(
+      hopper.position.current.z,
+      hopper.position.target.z,
       progress,
     );
 
@@ -88,9 +88,9 @@ export const updateHopper = ({
       hopper.moving = false;
       // Snap to target position to avoid floating point inaccuracies
       hopper.position.current.x = hopper.position.target.x;
-      hopper.position.current.y = hopper.position.target.y;
+      hopper.position.current.z = hopper.position.target.z;
       hopper.rendering.position.x = hopper.position.target.x;
-      hopper.rendering.position.y = hopper.position.target.y;
+      hopper.rendering.position.z = hopper.position.target.z;
       animationClock.stop();
     }
   }
