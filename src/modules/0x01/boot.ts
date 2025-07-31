@@ -1,10 +1,12 @@
 import { AmbientLight, Scene } from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 import { makeGroundPlane } from "./make-ground-plane.js";
 import { makeOrthographicCamera } from "./make-orthographic-camera";
 import { makeRenderer } from "./make-renderer";
 import { makeRunAnimationLoop } from "./make-run-animation-loop";
 import { isMapValid } from "./maps/is-map-valid";
+import { makePrey } from "./prey/make-prey";
 import { state } from "./state/state.js";
 import { addWallsToScene } from "./walls/add-walls-to-scene";
 
@@ -38,15 +40,9 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
     wallHeight: state.walls.height,
   });
 
-  const runAnimationLoop = makeRunAnimationLoop({
-    orthographicCamera,
-    renderer,
-    scene,
-  });
+  const { rendering: prey } = makePrey(state.prey);
 
-  renderer.setAnimationLoop(() => {
-    runAnimationLoop();
-  });
+  scene.add(prey);
 
   if (state.ambientLight.on) {
     const ambientLight = new AmbientLight(
@@ -56,4 +52,21 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
 
     scene.add(ambientLight);
   }
+
+  let controls;
+
+  if (state.orbitControls.on) {
+    controls = new OrbitControls(orthographicCamera, renderer.domElement);
+  }
+
+  const runAnimationLoop = makeRunAnimationLoop({
+    controls,
+    orthographicCamera,
+    renderer,
+    scene,
+  });
+
+  renderer.setAnimationLoop(() => {
+    runAnimationLoop();
+  });
 };

@@ -15,6 +15,10 @@ export const state: State = {
     width: 150,
   },
 
+  orbitControls: {
+    on: true,
+  },
+
   orthographicCamera: {
     edgeSize: 15,
     far: 1000,
@@ -22,6 +26,15 @@ export const state: State = {
     near: 1,
     position: new Vector3(10, 200, -5),
     renderer: undefined,
+  },
+
+  prey: {
+    body: {
+      depth: 0.75,
+      height: 2.5,
+      width: 0.75,
+    },
+    hat: false,
   },
 
   walls: {

@@ -15,6 +15,10 @@ export type State = {
     width: number;
   };
 
+  orbitControls: {
+    on: boolean;
+  };
+
   orthographicCamera: {
     edgeSize: number;
     far: number;
@@ -22,6 +26,15 @@ export type State = {
     near: number;
     position: Vector3;
     renderer: undefined | WebGLRenderer;
+  };
+
+  prey: {
+    body: {
+      depth: number;
+      height: number;
+      width: number;
+    };
+    hat: boolean;
   };
 
   walls: {
