@@ -30,11 +30,23 @@ export type State = {
 
   prey: {
     body: {
+      color: string | number;
       depth: number;
       height: number;
       width: number;
     };
     hat: boolean;
+    moving: boolean;
+    pointer: boolean;
+    position: {
+      current: { x: number; y: number; z: number };
+      target: { x: number; y: number; z: number };
+    };
+    rotation: {
+      current: { x: number; y: number; z: number };
+      target: { x: number; y: number; z: number };
+    };
+    stepTime: number;
   };
 
   walls: {

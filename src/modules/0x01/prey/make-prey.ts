@@ -1,12 +1,17 @@
 import { BoxGeometry, Group, Mesh, MeshPhongMaterial, PointLight } from "three";
 
 import { makeMagicHat } from "./make-magic-hat.js";
+import { makePointer } from "./make-pointer.js";
 
-export const makePrey = ({ body: { depth, height, width }, hat }) => {
-  const preyBodyGeometry = new BoxGeometry(width, height, depth);
+export const makePrey = (preyInitialState) => {
+  const preyBodyGeometry = new BoxGeometry(
+    preyInitialState.body.width,
+    preyInitialState.body.height,
+    preyInitialState.body.depth,
+  );
 
   const preyBodyMaterial = new MeshPhongMaterial({
-    color: "whitesmoke",
+    color: preyInitialState.body.color,
     flatShading: true,
   });
 
@@ -15,7 +20,7 @@ export const makePrey = ({ body: { depth, height, width }, hat }) => {
     preyBodyMaterial,
   );
 
-  preyBody.position.set(0, height / 2, 0);
+  preyBody.position.set(0, preyInitialState.body.height / 2, 0);
 
   const rendering = new Group();
 
@@ -23,23 +28,30 @@ export const makePrey = ({ body: { depth, height, width }, hat }) => {
 
   const candle = new PointLight(0xffffff, 40, 200);
 
-  candle.position.set(0, height + 1, 0);
+  candle.position.set(0, preyInitialState.body.height + 1, 0);
 
   candle.castShadow = true;
 
   rendering.add(candle);
 
-  if (hat) {
-    const magicHat = makeMagicHat({ height });
+  if (preyInitialState.body.hat) {
+    const magicHat = makeMagicHat({ height: preyInitialState.body.height });
 
     rendering.add(magicHat);
   }
 
-  const prey = {
-    body: { depth, height, width },
-    hat,
-    rendering,
-  };
+  if (preyInitialState.pointer) {
+    const pointer = makePointer({
+      color: preyInitialState.body.color,
+      height: preyInitialState.body.height,
+      width: preyInitialState.body.width,
+    });
 
-  return prey;
+    rendering.add(pointer);
+  }
+
+  return {
+    rendering,
+    ...preyInitialState,
+  };
 };

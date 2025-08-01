@@ -1,14 +1,20 @@
 import { AmbientLight, Scene } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
+import { input } from "./input/input.js";
+import { parseInput } from "./input/parse-input.js";
+import { startCollectingInput } from "./input/start-collecting-input.js";
 import { makeGroundPlane } from "./make-ground-plane.js";
-import { makeOrthographicCamera } from "./make-orthographic-camera";
-import { makeRenderer } from "./make-renderer";
-import { makeRunAnimationLoop } from "./make-run-animation-loop";
-import { isMapValid } from "./maps/is-map-valid";
-import { makePrey } from "./prey/make-prey";
+import { makeOrthographicCamera } from "./make-orthographic-camera.js";
+import { makeRenderer } from "./make-renderer.js";
+import { makeRunAnimationLoop } from "./make-run-animation-loop.js";
+import { makeRunLogicLoop } from "./make-run-logic-loop.js";
+import { isMapValid } from "./maps/is-map-valid.js";
+import { makePrey } from "./prey/make-prey.js";
+import { preyCommands } from "./prey/prey-commands.js";
+import { updatePrey } from "./prey/update-prey.js";
 import { state } from "./state/state.js";
-import { addWallsToScene } from "./walls/add-walls-to-scene";
+import { addWallsToScene } from "./walls/add-walls-to-scene.js";
 
 export const boot = async ({ container }: { container: HTMLDivElement }) => {
   const renderer = makeRenderer({ container });
@@ -40,9 +46,9 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
     wallHeight: state.walls.height,
   });
 
-  const { rendering: prey } = makePrey(state.prey);
+  const prey = makePrey(state.prey);
 
-  scene.add(prey);
+  scene.add(prey.rendering);
 
   if (state.ambientLight.on) {
     const ambientLight = new AmbientLight(
@@ -66,7 +72,20 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
     scene,
   });
 
+  const runLogicLoop = makeRunLogicLoop({
+    fixedTimeStep: 1000 / 60,
+    maximumNumberOfSubsteps: 5,
+    time: {
+      accumulator: 0,
+      lastUpdateTime: performance.now(),
+    },
+  });
+
   renderer.setAnimationLoop(() => {
+    runLogicLoop({ input, parseInput, prey, preyCommands, updatePrey });
+
     runAnimationLoop();
   });
+
+  startCollectingInput({ input });
 };

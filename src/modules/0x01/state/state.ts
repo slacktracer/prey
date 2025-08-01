@@ -30,11 +30,23 @@ export const state: State = {
 
   prey: {
     body: {
+      color: "whitesmoke",
       depth: 0.75,
       height: 2.5,
       width: 0.75,
     },
     hat: false,
+    moving: false,
+    pointer: true,
+    position: {
+      current: { x: 0, y: 0, z: 0 },
+      target: { x: 0, y: 0, z: 0 },
+    },
+    rotation: {
+      current: { x: 0, y: 0, z: 0 },
+      target: { x: 0, y: 0, z: 0 },
+    },
+    stepTime: 0.3,
   },
 
   walls: {
