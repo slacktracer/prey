@@ -6,7 +6,7 @@ export const state: State = {
   ambientLight: {
     color: 0xffffff,
     intensity: 1,
-    on: true,
+    on: false,
   },
 
   groundPlane: {

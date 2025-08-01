@@ -1,6 +1,6 @@
 import { BoxGeometry, Group, Mesh, MeshPhongMaterial, PointLight } from "three";
 
-import { makeMagicHat } from "./make-magic-hat";
+import { makeMagicHat } from "./make-magic-hat.js";
 
 export const makePrey = ({ body: { depth, height, width }, hat }) => {
   const preyBodyGeometry = new BoxGeometry(width, height, depth);
@@ -36,6 +36,8 @@ export const makePrey = ({ body: { depth, height, width }, hat }) => {
   }
 
   const prey = {
+    body: { depth, height, width },
+    hat,
     rendering,
   };
 
