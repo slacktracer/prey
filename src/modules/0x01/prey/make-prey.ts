@@ -51,9 +51,9 @@ export const makePrey = (preyInitialState) => {
   }
 
   rendering.position.set(
-    preyInitialState.position.x,
-    0,
-    preyInitialState.position.z,
+    preyInitialState.position.current.x,
+    preyInitialState.position.current.y,
+    preyInitialState.position.current.z,
   );
 
   return {
