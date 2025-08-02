@@ -36,17 +36,19 @@ export type State = {
       width: number;
     };
     hat: boolean;
+    moveTime: number;
     moving: boolean;
     pointer: boolean;
     position: {
       current: { x: number; y: number; z: number };
       target: { x: number; y: number; z: number };
     };
+    rotateTime: number;
+    rotating: boolean;
     rotation: {
       current: { x: number; y: number; z: number };
       target: { x: number; y: number; z: number };
     };
-    stepTime: number;
   };
 
   walls: {

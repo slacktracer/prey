@@ -2,28 +2,32 @@ import { Clock, MathUtils } from "three";
 
 import { getForward } from "../../common/get-forward.js";
 
-let clock = new Clock(false);
+let rotatingClock = new Clock(false);
+
+let movingClock = new Clock(false);
 
 export const updatePrey = ({ commands, prey, preyCommands }) => {
-  if (prey.moving === false) {
+  if (prey.rotating === false) {
     if (commands.includes(preyCommands.backward)) {
-      prey.moving = true;
+      prey.rotating = true;
 
       prey.rotation.target.y = prey.rendering.rotation.y + Math.PI;
     }
 
     if (commands.includes(preyCommands.left)) {
-      prey.moving = true;
+      prey.rotating = true;
 
       prey.rotation.target.y = prey.rendering.rotation.y + Math.PI / 2;
     }
 
     if (commands.includes(preyCommands.right)) {
-      prey.moving = true;
+      prey.rotating = true;
 
       prey.rotation.target.y = prey.rendering.rotation.y - Math.PI / 2;
     }
+  }
 
+  if (prey.moving === false) {
     if (commands.includes(preyCommands.forward)) {
       const [axis, direction] = getForward({
         rotation: prey.rendering.rotation.y,
@@ -35,41 +39,61 @@ export const updatePrey = ({ commands, prey, preyCommands }) => {
     }
   }
 
-  if (!clock.running && prey.moving) {
-    clock.start();
+  if (!movingClock.running && prey.moving) {
+    movingClock.start();
   }
 
-  const progress = Math.min(1, clock.getElapsedTime() / prey.stepTime);
+  if (!rotatingClock.running && prey.rotating) {
+    rotatingClock.start();
+  }
+
+  const movingProgress = Math.min(
+    1,
+    movingClock.getElapsedTime() / prey.moveTime,
+  );
 
   prey.rendering.position.x = MathUtils.lerp(
     prey.position.current.x,
     prey.position.target.x,
-    progress,
+    movingProgress,
   );
 
   prey.rendering.position.z = MathUtils.lerp(
     prey.position.current.z,
     prey.position.target.z,
-    progress,
+    movingProgress,
+  );
+
+  const rotatingProgress = Math.min(
+    1,
+    rotatingClock.getElapsedTime() / prey.moveTime,
   );
 
   prey.rendering.rotation.y = MathUtils.lerp(
     prey.rotation.current.y,
     prey.rotation.target.y,
-    progress,
+    rotatingProgress,
   );
 
-  if (progress >= 1) {
+  if (movingProgress >= 1) {
     prey.moving = false;
 
     prey.position.current.x = prey.position.target.x;
 
     prey.position.current.z = prey.position.target.z;
 
+    movingClock.stop();
+
+    movingClock = new Clock(false);
+  }
+
+  if (rotatingProgress >= 1) {
+    prey.rotating = false;
+
     prey.rotation.current.y = prey.rotation.target.y;
 
-    clock.stop();
+    rotatingClock.stop();
 
-    clock = new Clock(false);
+    rotatingClock = new Clock(false);
   }
 };

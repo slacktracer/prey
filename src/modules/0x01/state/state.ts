@@ -36,17 +36,19 @@ export const state: State = {
       width: 0.75,
     },
     hat: false,
+    moveTime: 0.3,
     moving: false,
     pointer: true,
     position: {
       current: { x: 0, y: 0, z: 0 },
       target: { x: 0, y: 0, z: 0 },
     },
+    rotateTime: 0.2,
+    rotating: false,
     rotation: {
       current: { x: 0, y: 0, z: 0 },
       target: { x: 0, y: 0, z: 0 },
     },
-    stepTime: 0.3,
   },
 
   walls: {
