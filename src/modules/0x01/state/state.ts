@@ -31,9 +31,9 @@ export const state: State = {
   prey: {
     body: {
       color: "whitesmoke",
-      depth: 0.75,
+      depth: 0.5,
       height: 2.5,
-      width: 0.75,
+      width: 0.5,
     },
     hat: false,
     moveTime: 0.3,
