@@ -16,7 +16,7 @@ export const state: State = {
   },
 
   orbitControls: {
-    on: true,
+    on: false,
   },
 
   orthographicCamera: {

@@ -1,4 +1,4 @@
-import { AmbientLight, Scene } from "three";
+import { AmbientLight, Group, Scene } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 import { input } from "./input/input.js";
@@ -26,6 +26,12 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
   const orthographicCamera = makeOrthographicCamera(state.orthographicCamera);
 
   scene.add(orthographicCamera);
+
+  const orthographicCameraGroup = new Group();
+
+  orthographicCameraGroup.add(orthographicCamera);
+
+  scene.add(orthographicCameraGroup);
 
   const groundPlane = makeGroundPlane(state.groundPlane);
 
@@ -68,6 +74,7 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
   const runAnimationLoop = makeRunAnimationLoop({
     controls,
     orthographicCamera,
+    orthographicCameraGroup,
     renderer,
     scene,
   });
@@ -84,7 +91,7 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
   renderer.setAnimationLoop(() => {
     runLogicLoop({ input, map, parseInput, prey, preyCommands, updatePrey });
 
-    runAnimationLoop();
+    runAnimationLoop({ prey });
   });
 
   startCollectingInput({ input });
