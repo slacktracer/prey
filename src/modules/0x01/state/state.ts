@@ -40,8 +40,8 @@ export const state: State = {
     moving: false,
     pointer: true,
     position: {
-      current: { x: 0, y: 0, z: 0 },
-      target: { x: 0, y: 0, z: 0 },
+      current: { x: 3, y: 0, z: 4 },
+      target: { x: 3, y: 0, z: 4 },
     },
     rotateTime: 0.2,
     rotating: false,
