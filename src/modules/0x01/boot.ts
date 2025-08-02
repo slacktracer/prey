@@ -82,7 +82,7 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
   });
 
   renderer.setAnimationLoop(() => {
-    runLogicLoop({ input, parseInput, prey, preyCommands, updatePrey });
+    runLogicLoop({ input, map, parseInput, prey, preyCommands, updatePrey });
 
     runAnimationLoop();
   });

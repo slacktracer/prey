@@ -1,12 +1,13 @@
 import { Clock, MathUtils } from "three";
 
 import { getForward } from "../../common/get-forward.js";
+import { isMovementAllowed } from "./is-movement-allowed.js";
 
 let rotatingClock = new Clock(false);
 
 let movingClock = new Clock(false);
 
-export const updatePrey = ({ commands, prey, preyCommands }) => {
+export const updatePrey = ({ commands, map, prey, preyCommands }) => {
   if (prey.rotating === false) {
     if (commands.includes(preyCommands.backward)) {
       prey.rotating = true;
@@ -33,9 +34,22 @@ export const updatePrey = ({ commands, prey, preyCommands }) => {
         rotation: prey.rendering.rotation.y,
       });
 
-      prey.moving = true;
+      const { x, y, z } = prey.position.current;
 
-      prey.position.target[axis] += direction;
+      const targetPosition = { x, y, z };
+
+      targetPosition[axis] += direction;
+
+      const movementIsAllowed = isMovementAllowed({
+        map,
+        targetPosition,
+      });
+
+      if (movementIsAllowed) {
+        prey.moving = true;
+
+        prey.position.target = targetPosition;
+      }
     }
   }
 

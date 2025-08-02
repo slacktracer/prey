@@ -3,7 +3,7 @@ export const makeRunLogicLoop = ({
   maximumNumberOfSubsteps,
   time,
 }) =>
-({ input, parseInput, prey, preyCommands, updatePrey }) => {
+({ input, map, parseInput, prey, preyCommands, updatePrey }) => {
   const currentTime = performance.now();
 
   const frameDeltaTimeCap = fixedTimeStep * maximumNumberOfSubsteps;
@@ -27,7 +27,7 @@ export const makeRunLogicLoop = ({
 
     const commands = parseInput({ input, preyCommands });
 
-    updatePrey({ commands, prey, preyCommands });
+    updatePrey({ commands, map, prey, preyCommands });
 
     numberOfSubstepsTaken += 1;
   }
