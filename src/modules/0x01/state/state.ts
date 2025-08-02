@@ -20,7 +20,7 @@ export const state: State = {
   },
 
   orthographicCamera: {
-    edgeSize: 15,
+    edgeSize: 10,
     far: 1000,
     lookAt: new Vector3(0, 0, 0),
     near: 1,

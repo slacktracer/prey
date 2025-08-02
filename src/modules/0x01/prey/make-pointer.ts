@@ -15,7 +15,7 @@ export const makePointer = ({ color, height, width }) => {
   const pointerHeight = pointerGeometry.parameters.height;
 
   pointer.position.set(
-    width / 2 + 0.1,
+    width / 2.5,
     height / 2 + pointerHeight / 2 + 0.1,
     0,
   );
