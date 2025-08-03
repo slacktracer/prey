@@ -1,5 +1,7 @@
 import { Mesh, MeshPhongMaterial, PlaneGeometry } from "three";
 
+import { makeGroundPlaneTexture } from "./make-ground-plane-texture.js";
+
 export const makeGroundPlane = ({
   color,
   height,
@@ -11,7 +13,11 @@ export const makeGroundPlane = ({
 }) => {
   const groundPlaneGeometry = new PlaneGeometry(width, height);
 
-  const groundPlaneMaterial = new MeshPhongMaterial({ color });
+  const groundPlaneTexture = makeGroundPlaneTexture({ color, height, width });
+
+  const groundPlaneMaterial = new MeshPhongMaterial({
+    map: groundPlaneTexture,
+  });
 
   const groundPlane = new Mesh(groundPlaneGeometry, groundPlaneMaterial);
 
