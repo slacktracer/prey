@@ -11,9 +11,9 @@ export type State = {
 
   cameraSettings: {
     lag: {
-      lookAhead: number;
+      factor: number;
+      lookAhead: { distance: number; on: boolean };
       on: boolean;
-      value: number;
     };
   };
 

@@ -1,6 +1,8 @@
-import { MathUtils } from "three";
+import { Clock, MathUtils } from "three";
 
-import { getForward } from "../common/get-forward";
+import { getForward } from "../common/get-forward.js";
+
+const clock = new Clock();
 
 export const makeRunAnimationLoop = ({
   cameraSettings,
@@ -11,23 +13,35 @@ export const makeRunAnimationLoop = ({
   scene,
 }) =>
 ({ prey }) => {
+  const deltaTime = clock.getDelta();
+
   if (cameraSettings.lag.on === true) {
+    const blend = 1 - Math.pow(0.5, cameraSettings.lag.factor * deltaTime);
+
     const [axis, direction] = getForward({
       rotation: prey.rendering.rotation.y,
     });
 
+    const targetX = cameraSettings.lag.lookAhead.on
+      ? (prey.rendering.position.x +
+        (axis === "x" ? direction * cameraSettings.lag.lookAhead.distance : 0))
+      : prey.rendering.position.x;
+
     orthographicCameraGroup.position.x = MathUtils.lerp(
       orthographicCameraGroup.position.x,
-      prey.rendering.position.x +
-        (axis === "x" ? direction * cameraSettings.lag.lookAhead : 0),
-      cameraSettings.lag.value,
+      targetX,
+      blend,
     );
+
+    const targetZ = cameraSettings.lag.lookAhead.on
+      ? (prey.rendering.position.z +
+        (axis === "z" ? direction * cameraSettings.lag.lookAhead.distance : 0))
+      : prey.rendering.position.z;
 
     orthographicCameraGroup.position.z = MathUtils.lerp(
       orthographicCameraGroup.position.z,
-      prey.rendering.position.z +
-        (axis === "z" ? direction * cameraSettings.lag.lookAhead : 0),
-      cameraSettings.lag.value,
+      targetZ,
+      blend,
     );
   } else {
     orthographicCameraGroup.position.x = prey.rendering.position.x;

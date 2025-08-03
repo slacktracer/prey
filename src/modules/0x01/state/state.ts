@@ -11,9 +11,9 @@ export const state: State = {
 
   cameraSettings: {
     lag: {
-      lookAhead: 2.5,
+      factor: 0.5,
+      lookAhead: { distance: 2, on: true },
       on: true,
-      value: 0.01,
     },
   },
 

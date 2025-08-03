@@ -19,13 +19,13 @@ export const makeRunLogicLoop = ({
 
   let numberOfSubstepsTaken = 0;
 
+  const commands = parseInput({ input, preyCommands });
+
   while (
     time.accumulator >= fixedTimeStep &&
     numberOfSubstepsTaken < maximumNumberOfSubsteps
   ) {
     time.accumulator -= fixedTimeStep;
-
-    const commands = parseInput({ input, preyCommands });
 
     updatePrey({ commands, map, prey, preyCommands });
 
