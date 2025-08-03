@@ -18,13 +18,15 @@ export const makeRunAnimationLoop = ({
 
     orthographicCameraGroup.position.x = MathUtils.lerp(
       orthographicCameraGroup.position.x,
-      prey.rendering.position.x + (axis === "x" ? direction * 2 : 0),
+      prey.rendering.position.x +
+        (axis === "x" ? direction * cameraSettings.lag.lookAhead : 0),
       cameraSettings.lag.value,
     );
 
     orthographicCameraGroup.position.z = MathUtils.lerp(
       orthographicCameraGroup.position.z,
-      prey.rendering.position.z + (axis === "z" ? direction * 2 : 0),
+      prey.rendering.position.z +
+        (axis === "z" ? direction * cameraSettings.lag.lookAhead : 0),
       cameraSettings.lag.value,
     );
   } else {
