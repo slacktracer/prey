@@ -9,6 +9,13 @@ export type State = {
     on: boolean;
   };
 
+  cameraSettings: {
+    lag: {
+      on: boolean;
+      value: number;
+    };
+  };
+
   groundPlane: {
     color: number;
     height: number;

@@ -72,6 +72,7 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
   }
 
   const runAnimationLoop = makeRunAnimationLoop({
+    cameraSettings: state.cameraSettings,
     controls,
     orthographicCamera,
     orthographicCameraGroup,

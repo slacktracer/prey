@@ -9,6 +9,13 @@ export const state: State = {
     on: false,
   },
 
+  cameraSettings: {
+    lag: {
+      on: true,
+      value: 0.01,
+    },
+  },
+
   groundPlane: {
     color: 0x303030,
     height: 150,
@@ -20,7 +27,7 @@ export const state: State = {
   },
 
   orthographicCamera: {
-    edgeSize: 7,
+    edgeSize: 8,
     far: 1000,
     lookAt: new Vector3(0, 0, 0),
     near: 1,
