@@ -37,7 +37,7 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
 
   scene.add(groundPlane);
 
-  const { map } = await import("./maps/map.js");
+  const { map } = await import("./maps/map-with-exit.js");
 
   const mapIsValid = isMapValid({ map });
 
