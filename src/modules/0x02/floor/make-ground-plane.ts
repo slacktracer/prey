@@ -15,9 +15,7 @@ export const makeGroundPlane = ({
   const groundPlaneGeometry = new PlaneGeometry(width, height);
 
   const textures = [makeTexture1, makeTexture2];
-
   const randomTexture = textures[Math.floor(Math.random() * 2)];
-
   const groundPlaneTexture = randomTexture({ color, height, width });
 
   const groundPlaneMaterial = new MeshPhongMaterial({
