@@ -1,6 +1,7 @@
 import { Mesh, MeshPhongMaterial, PlaneGeometry } from "three";
 
-import { makeGroundPlaneTexture } from "./make-ground-plane-texture.js";
+import { makeGroundPlaneTexture as makeTexture1 } from "./make-ground-plane-texture-1.js";
+import { makeGroundPlaneTexture as makeTexture2 } from "./make-ground-plane-texture-2.js";
 
 export const makeGroundPlane = ({
   color,
@@ -13,7 +14,11 @@ export const makeGroundPlane = ({
 }) => {
   const groundPlaneGeometry = new PlaneGeometry(width, height);
 
-  const groundPlaneTexture = makeGroundPlaneTexture({ color, height, width });
+  const textures = [makeTexture1, makeTexture2];
+
+  const randomTexture = textures[Math.floor(Math.random() * 2)];
+
+  const groundPlaneTexture = randomTexture({ color, height, width });
 
   const groundPlaneMaterial = new MeshPhongMaterial({
     map: groundPlaneTexture,

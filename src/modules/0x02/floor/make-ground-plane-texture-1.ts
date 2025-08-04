@@ -25,7 +25,7 @@ export const makeGroundPlaneTexture = (
 
   context.lineWidth = 1;
 
-  context.strokeStyle = "rgba(255, 255, 255, 0.1)";
+  context.strokeStyle = "rgba(255, 255, 255, 0.03)";
 
   context.beginPath();
 
