@@ -11,7 +11,7 @@ export const state: State = {
 
   cameraSettings: {
     lag: {
-      factor: 0.5,
+      factor: 2.0,
       lookAhead: { distance: 2, on: true },
       on: true,
     },
@@ -44,7 +44,8 @@ export const state: State = {
       width: 0.5,
     },
     hat: false,
-    moveTime: 0.4,
+    moveCooldownTime: 0.15,
+    moveTime: 0.5,
     moving: false,
     pointer: true,
     position: {
@@ -64,10 +65,10 @@ export const state: State = {
     material: {
       color: 0x38393f,
       flatShading: true,
+      opacity: 0.9,
       shininess: 0,
       specular: new Color(0x000000),
       transparent: true,
-      opacity: 0.9,
       wireframe: false,
     },
   },

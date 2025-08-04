@@ -3,9 +3,11 @@ import { Clock, MathUtils } from "three";
 import { getForward } from "../../common/get-forward.js";
 import { isMovementAllowed } from "./is-movement-allowed.js";
 
-let rotatingClock = new Clock(false);
+const cooldownClock = new Clock();
 
 let movingClock = new Clock(false);
+
+let rotatingClock = new Clock(false);
 
 export const updatePrey = ({ commands, map, prey, preyCommands }) => {
   if (prey.rotating === false) {
@@ -28,7 +30,10 @@ export const updatePrey = ({ commands, map, prey, preyCommands }) => {
     }
   }
 
-  if (prey.moving === false) {
+  const cooldownIsOver =
+    cooldownClock.getElapsedTime() >= prey.moveCooldownTime;
+
+  if (prey.rotating === false && prey.moving === false && cooldownIsOver) {
     if (commands.includes(preyCommands.forward)) {
       const [axis, direction] = getForward({
         rotation: prey.rendering.rotation.y,
@@ -99,6 +104,8 @@ export const updatePrey = ({ commands, map, prey, preyCommands }) => {
     movingClock.stop();
 
     movingClock = new Clock(false);
+
+    cooldownClock.start();
   }
 
   if (rotatingProgress >= 1) {

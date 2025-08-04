@@ -44,6 +44,7 @@ export type State = {
       width: number;
     };
     hat: boolean;
+    moveCooldownTime: number;
     moveTime: number;
     moving: boolean;
     pointer: boolean;
@@ -64,10 +65,10 @@ export type State = {
     material: {
       color: number;
       flatShading: boolean;
+      opacity: number;
       shininess: number;
       specular: Color;
       transparent: boolean;
-      opacity: number;
       wireframe: boolean;
     };
   };
