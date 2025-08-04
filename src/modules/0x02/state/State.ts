@@ -13,7 +13,6 @@ export type State = {
     lag: {
       factor: number;
       lookAhead: { distance: number; on: boolean };
-      on: boolean;
     };
   };
 

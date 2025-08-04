@@ -13,7 +13,6 @@ export const state: State = {
     lag: {
       factor: 2.0,
       lookAhead: { distance: 2, on: true },
-      on: true,
     },
   },
 
