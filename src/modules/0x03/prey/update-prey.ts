@@ -1,153 +1,139 @@
 import { Clock, MathUtils } from "three";
 
 import { getForward } from "../../common/get-forward.js";
-import { isMovementAllowed } from "./is-movement-allowed.js";
-
-let movingClock = new Clock(false);
+import { checkCollision } from "./check-collision.js";
 
 let rotatingClock = new Clock(false);
 
-export const updatePrey = ({ commands, map, prey, preyCommands }) => {
+export const updatePrey = (
+  { commands, map, prey, preyCommands },
+  deltaTime,
+) => {
+  const dt = deltaTime / 1000; // Convert to seconds
+
+  // Handle rotation input (cardinal directions only)
   if (prey.rotating === false) {
     if (commands.includes(preyCommands.backward)) {
       prey.rotating = true;
-
       prey.rotation.target.y = prey.rendering.rotation.y + Math.PI;
+      rotatingClock = new Clock();
+      rotatingClock.start();
     }
 
     if (commands.includes(preyCommands.left)) {
       prey.rotating = true;
-
       prey.rotation.target.y = prey.rendering.rotation.y + Math.PI / 2;
+      rotatingClock = new Clock();
+      rotatingClock.start();
     }
 
     if (commands.includes(preyCommands.right)) {
       prey.rotating = true;
-
       prey.rotation.target.y = prey.rendering.rotation.y - Math.PI / 2;
+      rotatingClock = new Clock();
+      rotatingClock.start();
     }
   }
 
-  if (prey.rotating === false && prey.moving === false) {
-    if (commands.includes(preyCommands.forward)) {
-      const [axis, direction] = getForward({
-        rotation: prey.rendering.rotation.y,
-      });
-
-      const { x, y, z } = prey.position.target;
-
-      const targetPosition = { x, y, z };
-
-      targetPosition[axis] += direction;
-
-      const movementIsAllowed = isMovementAllowed({
-        map,
-        targetPosition,
-      });
-
-      if (movementIsAllowed) {
-        if (prey.moving === false) {
-          prey.moving = true;
-
-          movingClock.start();
-        }
-
-        prey.position.current = {
-          x: prey.rendering.position.x,
-          y: prey.rendering.position.y,
-          z: prey.rendering.position.z,
-        };
-
-        prey.position.target = targetPosition;
-
-        movingClock = new Clock();
-
-        movingClock.start();
-      }
-    }
+  // Handle movement input
+  let moveInput = 0;
+  if (commands.includes(preyCommands.forward)) {
+    moveInput += 1;
   }
+  // Note: backward only rotates, doesn't move (like original system)
 
-  if (!movingClock.running && prey.moving) {
-    movingClock.start();
-  }
+  // Calculate movement direction using the same logic as the original system
+  const [axis, direction] = getForward({
+    rotation: prey.rendering.rotation.y,
+  });
 
-  if (!rotatingClock.running && prey.rotating) {
-    rotatingClock.start();
-  }
+  const forward = {
+    x: axis === "x" ? direction : 0,
+    z: axis === "z" ? direction : 0,
+  };
 
-  const movingProgress = Math.min(
-    1,
-    movingClock.getElapsedTime() / prey.moveTime,
-  );
+  // Calculate intended new position
+  const newVelocity = {
+    x: forward.x * moveInput * prey.speed,
+    z: forward.z * moveInput * prey.speed,
+  };
 
-  prey.rendering.position.x = MathUtils.lerp(
-    prey.position.current.x,
-    prey.position.target.x,
-    movingProgress,
-  );
+  const newPosition = {
+    x: prey.position.x + newVelocity.x * dt,
+    y: prey.position.y,
+    z: prey.position.z + newVelocity.z * dt,
+  };
 
-  prey.rendering.position.z = MathUtils.lerp(
-    prey.position.current.z,
-    prey.position.target.z,
-    movingProgress,
-  );
+  // Check collision and update position accordingly
+  if (!checkCollision({ map, position: newPosition })) {
+    // No collision, move normally
+    prey.velocity.x = newVelocity.x;
+    prey.velocity.z = newVelocity.z;
+    prey.position.x = newPosition.x;
+    prey.position.z = newPosition.z;
+  } else {
+    // Collision detected, try sliding along walls
 
-  const rotatingProgress = Math.min(
-    1,
-    rotatingClock.getElapsedTime() / prey.rotateTime,
-  );
+    // Try moving only along X axis
+    const newPositionX = {
+      x: prey.position.x + newVelocity.x * dt,
+      y: prey.position.y,
+      z: prey.position.z,
+    };
 
-  prey.rendering.rotation.y = MathUtils.lerp(
-    prey.rotation.current.y,
-    prey.rotation.target.y,
-    rotatingProgress,
-  );
-
-  if (movingProgress >= 1) {
-    prey.position.current.x = prey.position.target.x;
-    prey.position.current.z = prey.position.target.z;
-
-    // Check if forward is still pressed for continuous movement
-    if (commands.includes(preyCommands.forward) && prey.rotating === false) {
-      const [axis, direction] = getForward({
-        rotation: prey.rendering.rotation.y,
-      });
-
-      const { x, y, z } = prey.position.target;
-      const targetPosition = { x, y, z };
-      targetPosition[axis] += direction;
-
-      const movementIsAllowed = isMovementAllowed({
-        map,
-        targetPosition,
-      });
-
-      if (movementIsAllowed) {
-        // Continue movement seamlessly
-        prey.position.target = targetPosition;
-        movingClock = new Clock();
-        movingClock.start();
-      } else {
-        // Stop movement if blocked
-        prey.moving = false;
-        movingClock.stop();
-        movingClock = new Clock(false);
-      }
+    if (!checkCollision({ map, position: newPositionX })) {
+      // Can slide along X
+      prey.velocity.x = newVelocity.x;
+      prey.velocity.z = 0;
+      prey.position.x = newPositionX.x;
     } else {
-      // Stop movement if forward not pressed
-      prey.moving = false;
-      movingClock.stop();
-      movingClock = new Clock(false);
+      // Try moving only along Z axis
+      const newPositionZ = {
+        x: prey.position.x,
+        y: prey.position.y,
+        z: prey.position.z + newVelocity.z * dt,
+      };
+
+      if (!checkCollision({ map, position: newPositionZ })) {
+        // Can slide along Z
+        prey.velocity.x = 0;
+        prey.velocity.z = newVelocity.z;
+        prey.position.z = newPositionZ.z;
+      } else {
+        // Can't move at all, stop
+        prey.velocity.x = 0;
+        prey.velocity.z = 0;
+      }
     }
   }
 
-  if (rotatingProgress >= 1) {
-    prey.rotating = false;
+  // Handle rotation interpolation
+  if (prey.rotating) {
+    if (!rotatingClock.running) {
+      rotatingClock.start();
+    }
 
-    prey.rotation.current.y = prey.rotation.target.y;
+    const rotatingProgress = Math.min(
+      1,
+      rotatingClock.getElapsedTime() / prey.rotateTime,
+    );
 
-    rotatingClock.stop();
+    prey.rendering.rotation.y = MathUtils.lerp(
+      prey.rotation.current.y,
+      prey.rotation.target.y,
+      rotatingProgress,
+    );
 
-    rotatingClock = new Clock(false);
+    if (rotatingProgress >= 1) {
+      prey.rotating = false;
+      prey.rotation.current.y = prey.rotation.target.y;
+      rotatingClock.stop();
+      rotatingClock = new Clock(false);
+    }
   }
+
+  // Update rendering position
+  prey.rendering.position.x = prey.position.x;
+  prey.rendering.position.y = prey.position.y;
+  prey.rendering.position.z = prey.position.z;
 };

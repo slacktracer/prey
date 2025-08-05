@@ -27,7 +27,7 @@ export const makeRunLogicLoop = ({
   ) {
     time.accumulator -= fixedTimeStep;
 
-    updatePrey({ commands, map, prey, preyCommands });
+    updatePrey({ commands, map, prey, preyCommands }, fixedTimeStep);
 
     numberOfSubstepsTaken += 1;
   }

@@ -11,8 +11,8 @@ export const state: State = {
 
   cameraSettings: {
     lag: {
-      factor: 0.9,
-      lookAhead: { distance: 3, on: true },
+      factor: 10,
+      lookAhead: { distance: 3, on: false },
     },
   },
 
@@ -43,19 +43,24 @@ export const state: State = {
       width: 0.5,
     },
     hat: false,
-    moveTime: 0.4,
-    moving: false,
     pointer: true,
     position: {
-      current: { x: 3, y: 0, z: 4 },
-      target: { x: 3, y: 0, z: 4 },
+      x: 0,
+      y: 0,
+      z: 0,
     },
+    velocity: {
+      x: 0,
+      y: 0,
+      z: 0,
+    },
+    rotation: {
+      current: { y: 0 },
+      target: { y: 0 },
+    },
+    speed: 4.0,
     rotateTime: 0.3,
     rotating: false,
-    rotation: {
-      current: { x: 0, y: 0, z: 0 },
-      target: { x: 0, y: 0, z: 0 },
-    },
   },
 
   walls: {
