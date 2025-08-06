@@ -3,12 +3,15 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 import { makeGroundPlane } from "./floor/make-ground-plane.js";
 import { input } from "./input/input.js";
+import { parseInput } from "./input/parse-input.js";
 import { startCollectingInput } from "./input/start-collecting-input.js";
 import { makeOrthographicCamera } from "./make-orthographic-camera.js";
 import { makeRenderer } from "./make-renderer.js";
 import { makeRunAnimationLoop } from "./make-run-animation-loop.js";
 import { makeRunLogicLoop } from "./make-run-logic-loop.js";
 import { makePrey } from "./prey/make-prey.js";
+import { preyCommands } from "./prey/prey-commands";
+import { updatePrey } from "./prey/update-prey.js";
 import { state } from "./state/state.js";
 
 export const boot = async ({ container }: { container: HTMLDivElement }) => {
@@ -58,10 +61,16 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
     scene,
   });
 
-  const runLogicLoop = makeRunLogicLoop(state.logicLoop);
+  const runLogicLoop = makeRunLogicLoop({
+    ...state.logicLoop,
+    parseInput,
+    prey,
+    preyCommands,
+    updatePrey,
+  });
 
   renderer.setAnimationLoop(() => {
-    runLogicLoop({ prey });
+    runLogicLoop();
 
     runAnimationLoop();
   });

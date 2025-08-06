@@ -1,10 +1,8 @@
 import { Clock, MathUtils } from "three";
 
-import { preyCommands } from "./prey-commands";
-
 const rotatingClock = new Clock();
 
-export const updatePrey = ({ commands, prey }) => {
+export const updatePrey = ({ commands, prey, preyCommands }) => {
   if (prey.rotating === false) {
     if (commands.includes(preyCommands.backward)) {
       prey.rotating = true;

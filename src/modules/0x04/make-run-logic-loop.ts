@@ -1,12 +1,13 @@
-import { parseInput } from "./input/parse-input.js";
-import { updatePrey } from "./prey/update-prey.js";
-
 export const makeRunLogicLoop = ({
   fixedTimeStep,
   maximumNumberOfSubsteps,
+  parseInput,
+  prey,
+  preyCommands,
   time,
+  updatePrey,
 }) =>
-({ prey }) => {
+() => {
   time.lastUpdateTime ||= performance.now();
 
   const currentTime = performance.now();
@@ -32,7 +33,7 @@ export const makeRunLogicLoop = ({
   ) {
     time.accumulator -= fixedTimeStep;
 
-    updatePrey({ commands, prey });
+    updatePrey({ commands, prey, preyCommands });
 
     numberOfSubstepsTaken += 1;
   }
