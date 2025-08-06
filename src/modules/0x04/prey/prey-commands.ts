@@ -3,4 +3,4 @@ export const preyCommands = {
   left: Symbol("left"),
   right: Symbol("right"),
   forward: Symbol("forward"),
-};
+} as const;

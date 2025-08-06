@@ -1,7 +1,6 @@
-import { preyCommands } from "../prey/prey-commands.js";
-import { input } from "./input.js";
+import type { ParseInput } from "../types/ParseInput.js";
 
-export const parseInput = () => {
+export const parseInput: ParseInput = ({ input, preyCommands }) => {
   const commands = [];
 
   if (input.pressedKeys.ArrowDown === true) {

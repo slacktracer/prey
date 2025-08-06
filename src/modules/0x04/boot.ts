@@ -69,6 +69,7 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
 
   const runLogicLoop = makeRunLogicLoop({
     ...state.logicLoop,
+    input,
     parseInput,
     prey,
     preyCommands,

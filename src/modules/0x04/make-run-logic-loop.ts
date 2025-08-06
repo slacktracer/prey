@@ -1,5 +1,6 @@
 export const makeRunLogicLoop = ({
   fixedTimeStep,
+  input,
   maximumNumberOfSubsteps,
   parseInput,
   prey,
@@ -19,7 +20,7 @@ export const makeRunLogicLoop = ({
     frameDeltaTimeCap,
   );
 
-  const commands = parseInput();
+  const commands = parseInput({ input, preyCommands });
 
   time.lastUpdateTime = currentTime;
 
