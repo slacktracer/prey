@@ -1,5 +1,7 @@
 import { BoxGeometry, Group, Mesh, MeshPhongMaterial, PointLight } from "three";
 
+import { makePointer } from "../../0x04/prey/make-pointer.js";
+
 export const makePrey = (preyInitialState) => {
   const preyBodyGeometry = new BoxGeometry(
     preyInitialState.body.width,
@@ -22,6 +24,17 @@ export const makePrey = (preyInitialState) => {
   const rendering = new Group();
 
   rendering.add(preyBody);
+
+  if (preyInitialState.pointer) {
+    const pointer = makePointer({
+      color: preyInitialState.body.color,
+      depth: preyInitialState.body.depth,
+      height: preyInitialState.body.height,
+      width: preyInitialState.body.width,
+    });
+
+    rendering.add(pointer);
+  }
 
   const candle = new PointLight(0xffffff, 40, 200);
 

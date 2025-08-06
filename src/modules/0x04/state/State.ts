@@ -44,6 +44,7 @@ export type State = {
       height: number;
       width: number;
     };
+    pointer: boolean;
     position: { x: number; y: number; z: number };
     //  velocity: { x: number; y: number; z: number };
     rotateTime: number;
