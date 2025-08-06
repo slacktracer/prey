@@ -1,19 +1,17 @@
-import type { Vector3 } from "three";
 import { OrthographicCamera } from "three";
 
-import { getBottomLeftRightTop } from "../common/get-bottom-left-right-top.js";
-import { makeOrthographicCameraResizeHandler } from "../common/make-ortographic-camera-resize-handler.js";
+import type { MakeOrthographicCamera } from "./types/MakeOrthographicCamera.js";
 
-export const makeOrthographicCamera = (
-  { edgeSize, far, lookAt, near, position, renderer }: {
-    edgeSize: number;
-    far: number;
-    lookAt: Vector3;
-    near: number;
-    position: Vector3;
-    renderer: unknown;
-  },
-) => {
+export const makeOrthographicCamera: MakeOrthographicCamera = ({
+  edgeSize,
+  far,
+  getBottomLeftRightTop,
+  lookAt,
+  makeOrthographicCameraResizeHandler,
+  near,
+  position,
+  renderer,
+}) => {
   const aspect = window.innerWidth / window.innerHeight;
 
   const height = edgeSize;

@@ -1,6 +1,8 @@
 import { AmbientLight, Group, Scene } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
+import { getBottomLeftRightTop } from "../common/get-bottom-left-right-top.js";
+import { makeOrthographicCameraResizeHandler } from "../common/make-ortographic-camera-resize-handler.js";
 import { makeGroundPlane } from "./floor/make-ground-plane.js";
 import { input } from "./input/input.js";
 import { parseInput } from "./input/parse-input.js";
@@ -10,7 +12,7 @@ import { makeRenderer } from "./make-renderer.js";
 import { makeRunAnimationLoop } from "./make-run-animation-loop.js";
 import { makeRunLogicLoop } from "./make-run-logic-loop.js";
 import { makePrey } from "./prey/make-prey.js";
-import { preyCommands } from "./prey/prey-commands";
+import { preyCommands } from "./prey/prey-commands.js";
 import { updatePrey } from "./prey/update-prey.js";
 import { state } from "./state/state.js";
 
@@ -21,7 +23,11 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
 
   const scene = new Scene();
 
-  const orthographicCamera = makeOrthographicCamera(state.orthographicCamera);
+  const orthographicCamera = makeOrthographicCamera({
+    ...state.orthographicCamera,
+    getBottomLeftRightTop,
+    makeOrthographicCameraResizeHandler,
+  });
 
   scene.add(orthographicCamera);
 

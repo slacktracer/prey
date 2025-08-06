@@ -1,18 +1,20 @@
 import { getBottomLeftRightTop } from "./get-bottom-left-right-top.js";
+import type { MakeOrthographicCameraResizeHandler } from "./types/MakeOrthographicCameraResizeHandler.js";
 
-export const makeOrthographicCameraResizeHandler =
-  ({ edgeSize, orthographicCamera, renderer }) => () => {
-    const aspect = window.innerWidth / window.innerHeight;
+export const makeOrthographicCameraResizeHandler:
+  MakeOrthographicCameraResizeHandler =
+    ({ edgeSize, orthographicCamera, renderer }) => () => {
+      const aspect = window.innerWidth / window.innerHeight;
 
-    const height = edgeSize;
+      const height = edgeSize;
 
-    const width = height * aspect;
+      const width = height * aspect;
 
-    Object.entries(getBottomLeftRightTop({ height, width })).map(
-      ([key, value]) => (orthographicCamera[key] = value),
-    );
+      Object.entries(getBottomLeftRightTop({ height, width })).map(
+        ([key, value]) => (orthographicCamera[key] = value),
+      );
 
-    orthographicCamera.updateProjectionMatrix();
+      orthographicCamera.updateProjectionMatrix();
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  };
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
