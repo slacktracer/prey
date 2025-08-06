@@ -41,8 +41,8 @@ export const state: State = {
   prey: {
     body: { color: "whitesmoke", depth: 0.5, height: 2.5, width: 0.5 },
     position: { x: 0, y: 0, z: 0 },
-    //   rotateTime: 0.3,
-    //   rotating: false,
+    rotateTime: 0.3,
+    rotating: false,
     rotation: { current: { y: 0 }, target: { y: 0 } },
     //   speed: 4.0,
     //   velocity: { x: 0, y: 0, z: 0 },
