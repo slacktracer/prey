@@ -19,7 +19,7 @@ import { makePointer } from "./prey/make-pointer.js";
 import { makePrey } from "./prey/make-prey.js";
 import { preyCommands } from "./prey/prey-commands.js";
 import { updatePrey } from "./prey/update-prey.js";
-import { state } from "./state/state.js";
+import { state } from "./state.js";
 
 export const boot = async ({ container }: { container: HTMLDivElement }) => {
   const renderer = makeRenderer({ container });
