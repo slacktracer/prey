@@ -1,14 +1,16 @@
 import { CanvasTexture, Color, RepeatWrapping } from "three";
 
-import { addCracksToTexture } from "./add-cracks-to-texture.js";
-import { addCracksToTextureFunctions } from "./add-cracks-to-texture-functions.js";
+import type { MakeGroundPlaneTexture } from "../types/MakeGroundPlaneTexture.js";
 
-export const makeGroundPlaneTexture = (
-  { color, cracks, height, width }: {
-    color: number;
-    cracks: boolean;
-    height: number;
-    width: number;
+export const makeGroundPlaneTexture: MakeGroundPlaneTexture = (
+  {
+    addCracksToTexture,
+    addCracksToTextureFunctions,
+    color,
+    cracks,
+    getRandomInteger,
+    height,
+    width,
   },
 ) => {
   const canvas = document.createElement("canvas");
@@ -52,7 +54,11 @@ export const makeGroundPlaneTexture = (
   context.stroke();
 
   if (cracks) {
-    addCracksToTexture({ addCracksToTextureFunctions, context });
+    addCracksToTexture({
+      addCracksToTextureFunctions,
+      context,
+      getRandomInteger,
+    });
   }
 
   const texture = new CanvasTexture(canvas);

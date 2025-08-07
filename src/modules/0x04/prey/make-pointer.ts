@@ -1,6 +1,8 @@
 import { ConeGeometry, Mesh, MeshPhongMaterial } from "three";
 
-export const makePointer = ({ color, depth, height, width }) => {
+import type { MakePointer } from "../types/MakePointer.js";
+
+export const makePointer: MakePointer = ({ color, depth, height, width }) => {
   const pointerGeometry = new ConeGeometry(width * 0.4, depth / 2, 64);
 
   const pointerMaterial = new MeshPhongMaterial({

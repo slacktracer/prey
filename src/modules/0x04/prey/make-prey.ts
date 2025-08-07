@@ -1,16 +1,18 @@
 import { BoxGeometry, Group, Mesh, MeshPhongMaterial, PointLight } from "three";
 
-import { makePointer } from "../../0x04/prey/make-pointer.js";
+import type { MakePrey } from "../types/MakePrey.js";
 
-export const makePrey = (preyInitialState) => {
+export const makePrey: MakePrey = (
+  { body, makePointer, pointer, position, rotateTime, rotating, rotation },
+) => {
   const preyBodyGeometry = new BoxGeometry(
-    preyInitialState.body.width,
-    preyInitialState.body.height,
-    preyInitialState.body.depth,
+    body.width,
+    body.height,
+    body.depth,
   );
 
   const preyBodyMaterial = new MeshPhongMaterial({
-    color: preyInitialState.body.color,
+    color: body.color,
     flatShading: true,
   });
 
@@ -19,41 +21,44 @@ export const makePrey = (preyInitialState) => {
     preyBodyMaterial,
   );
 
-  preyBody.position.set(0, preyInitialState.body.height / 2, 0);
+  preyBody.position.set(0, body.height / 2, 0);
 
   const rendering = new Group();
 
   rendering.add(preyBody);
 
-  if (preyInitialState.pointer) {
-    const pointer = makePointer({
-      color: preyInitialState.body.color,
-      depth: preyInitialState.body.depth,
-      height: preyInitialState.body.height,
-      width: preyInitialState.body.width,
-    });
-
-    rendering.add(pointer);
+  if (pointer) {
+    rendering.add(makePointer({
+      color: body.color,
+      depth: body.depth,
+      height: body.height,
+      width: body.width,
+    }));
   }
 
   const candle = new PointLight(0xffffff, 40, 200);
 
-  candle.position.set(0, preyInitialState.body.height + 1, 0);
+  candle.position.set(0, body.height + 1, 0);
 
   candle.castShadow = true;
 
   rendering.add(candle);
 
   rendering.position.set(
-    preyInitialState.position.x,
-    preyInitialState.position.y,
-    preyInitialState.position.z,
+    position.x,
+    position.y,
+    position.z,
   );
 
-  rendering.rotation.y = preyInitialState.rotation.current.y;
+  rendering.rotation.y = rotation.current.y;
 
   return {
+    body,
+    pointer,
+    position,
     rendering,
-    ...preyInitialState,
+    rotateTime,
+    rotating,
+    rotation,
   };
 };

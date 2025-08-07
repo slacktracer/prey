@@ -1,12 +1,7 @@
-import { getRandomInteger } from "../../common/get-random-integer.js";
+import type { AddCracksToTexture } from "../types/AddCracksToTexture.js";
 
-export const addCracksToTexture = (
-  { addCracksToTextureFunctions, context }: {
-    addCracksToTextureFunctions: ((
-      { context: CanvasRenderingContext2D },
-    ) => void)[];
-    context: CanvasRenderingContext2D;
-  },
+export const addCracksToTexture: AddCracksToTexture = (
+  { addCracksToTextureFunctions, context, getRandomInteger },
 ) => {
   const addThisManyCrackTypes = getRandomInteger({ max: 4, min: 2 });
 

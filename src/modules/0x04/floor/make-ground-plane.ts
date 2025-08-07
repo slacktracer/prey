@@ -1,23 +1,25 @@
 import { Mesh, MeshPhongMaterial, PlaneGeometry } from "three";
 
-import { makeGroundPlaneTexture } from "./make-ground-plane-texture.js";
+import type { MakeGroundPlane } from "../types/MakeGroundPlane.js";
 
-export const makeGroundPlane = ({
+export const makeGroundPlane: MakeGroundPlane = ({
+  addCracksToTexture,
+  addCracksToTextureFunctions,
   color,
   cracks,
+  getRandomInteger,
   height,
+  makeGroundPlaneTexture,
   width,
-}: {
-  color: number;
-  cracks: boolean;
-  width: number;
-  height: number;
 }) => {
   const groundPlaneGeometry = new PlaneGeometry(width, height);
 
   const groundPlaneTexture = makeGroundPlaneTexture({
+    addCracksToTexture,
+    addCracksToTextureFunctions,
     color,
     cracks,
+    getRandomInteger,
     height,
     width,
   });
