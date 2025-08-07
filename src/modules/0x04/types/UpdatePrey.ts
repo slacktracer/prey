@@ -1,7 +1,7 @@
 import type { Group } from "three";
 
-import type { State } from "../state/State.js";
 import type { PreyCommands } from "./PreyCommands.js";
+import type { State } from "./State.js";
 
 export type UpdatePrey = (input: {
   commands: symbol[];

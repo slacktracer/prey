@@ -1,6 +1,6 @@
 import { Vector3 } from "three";
 
-import type { State } from "./State.js";
+import type { State } from "../types/State.js";
 
 export const state: State = {
   ambientLight: {
