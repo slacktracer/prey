@@ -5,9 +5,9 @@ export type AddCracksToTexture = ({
   context,
   getRandomInteger,
 }: {
-  addCracksToTextureFunctions: ((
-    { context: CanvasRenderingContext2D },
-  ) => void)[];
+  addCracksToTextureFunctions: ((input: {
+    context: CanvasRenderingContext2D;
+  }) => void)[];
   context: CanvasRenderingContext2D;
   getRandomInteger: GetRandomInteger;
 }) => void;

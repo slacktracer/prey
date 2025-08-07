@@ -29,7 +29,7 @@ export const makeOrthographicCamera: MakeOrthographicCamera = ({
     far,
   );
 
-  orthographicCamera.position.set(...position);
+  orthographicCamera.position.set(position.x, position.y, position.z);
 
   orthographicCamera.lookAt(lookAt);
 

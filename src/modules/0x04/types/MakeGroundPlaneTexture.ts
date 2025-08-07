@@ -13,9 +13,9 @@ export type MakeGroundPlaneTexture = ({
   width,
 }: {
   addCracksToTexture: AddCracksToTexture;
-  addCracksToTextureFunctions: ((
-    { context: CanvasRenderingContext2D },
-  ) => void)[];
+  addCracksToTextureFunctions: ((input: {
+    context: CanvasRenderingContext2D;
+  }) => void)[];
   color: number;
   cracks: boolean;
   getRandomInteger: GetRandomInteger;

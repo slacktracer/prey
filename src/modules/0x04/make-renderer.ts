@@ -1,6 +1,8 @@
 import { PCFSoftShadowMap, WebGLRenderer } from "three";
 
-export const makeRenderer = ({ container }) => {
+import type { MakeRenderer } from "./types/MakeRenderer.js";
+
+export const makeRenderer: MakeRenderer = ({ container }) => {
   const renderer = new WebGLRenderer({ alpha: true, antialias: true });
 
   renderer.setPixelRatio(window.devicePixelRatio);

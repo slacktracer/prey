@@ -1,5 +1,5 @@
 import { AmbientLight, Group, Scene } from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 import { getBottomLeftRightTop } from "../common/get-bottom-left-right-top.js";
 import { getRandomInteger } from "../common/get-random-integer.js";

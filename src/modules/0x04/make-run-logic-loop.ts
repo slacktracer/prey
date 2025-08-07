@@ -1,4 +1,6 @@
-export const makeRunLogicLoop = ({
+import type { MakeRunLogicLoop } from "./types/MakeRunLogicLoop.js";
+
+export const makeRunLogicLoop: MakeRunLogicLoop = ({
   fixedTimeStep,
   input,
   maximumNumberOfSubsteps,

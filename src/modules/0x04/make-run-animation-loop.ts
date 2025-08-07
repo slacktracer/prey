@@ -1,4 +1,6 @@
-export const makeRunAnimationLoop = ({
+import type { MakeRunAnimationLoop } from "./types/MakeRunAnimationLoop.js";
+
+export const makeRunAnimationLoop: MakeRunAnimationLoop = ({
   controls,
   orthographicCamera,
   renderer,
