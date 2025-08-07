@@ -1,7 +1,7 @@
-import type { OrthographicCamera } from "three";
+import type { OrthographicCamera, WebGLRenderer } from "three";
 
 export type MakeOrthographicCameraResizeHandler = (input: {
   edgeSize: number;
   orthographicCamera: OrthographicCamera;
-  renderer: unknown;
+  renderer: WebGLRenderer;
 }) => () => void;

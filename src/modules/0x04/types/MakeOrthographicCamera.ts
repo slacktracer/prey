@@ -1,4 +1,4 @@
-import type { OrthographicCamera, Vector3 } from "three";
+import type { OrthographicCamera, Vector3, WebGLRenderer } from "three";
 
 import type { GetBottomLeftRightTop } from "../../common/types/GetBottomLeftRightTop.js";
 import type { MakeOrthographicCameraResizeHandler } from "../../common/types/MakeOrthographicCameraResizeHandler.js";
@@ -11,5 +11,5 @@ export type MakeOrthographicCamera = (input: {
   makeOrthographicCameraResizeHandler: MakeOrthographicCameraResizeHandler;
   near: number;
   position: Vector3;
-  renderer: unknown;
+  renderer: undefined | WebGLRenderer;
 }) => OrthographicCamera;

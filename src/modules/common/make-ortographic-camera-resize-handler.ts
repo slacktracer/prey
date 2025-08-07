@@ -10,9 +10,15 @@ export const makeOrthographicCameraResizeHandler:
 
       const width = height * aspect;
 
-      Object.entries(getBottomLeftRightTop({ height, width })).map(
-        ([key, value]) => (orthographicCamera[key] = value),
-      );
+      const { bottom, left, right, top } = getBottomLeftRightTop({
+        height,
+        width,
+      });
+
+      orthographicCamera.left = left;
+      orthographicCamera.right = right;
+      orthographicCamera.top = top;
+      orthographicCamera.bottom = bottom;
 
       orthographicCamera.updateProjectionMatrix();
 
