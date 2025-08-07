@@ -3,20 +3,20 @@ import { Vector3 } from "three";
 import type { State } from "./types/State.js";
 
 export const state: State = {
-  ambientLight: {
+  ambientLightSettings: {
     color: 0xffffff,
     intensity: 1,
     on: false,
   },
 
-  groundPlane: {
+  groundPlaneSettings: {
     color: 0x303030,
     cracks: true,
     height: 150,
     width: 150,
   },
 
-  logicLoop: {
+  logicLoopSettings: {
     fixedTimeStep: 1 / 60,
     maximumNumberOfSubsteps: 5,
     time: {
@@ -25,11 +25,11 @@ export const state: State = {
     },
   },
 
-  orbitControls: {
+  orbitControlsSettings: {
     on: false,
   },
 
-  orthographicCamera: {
+  orthographicCameraSettings: {
     edgeSize: 8,
     far: 1000,
     lookAt: new Vector3(0, 0, 0),

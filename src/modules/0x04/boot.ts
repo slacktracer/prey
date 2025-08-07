@@ -24,12 +24,12 @@ import { state } from "./state.js";
 export const boot = async ({ container }: { container: HTMLDivElement }) => {
   const renderer = makeRenderer({ container });
 
-  state.orthographicCamera.renderer = renderer;
+  state.orthographicCameraSettings.renderer = renderer;
 
   const scene = new Scene();
 
   const orthographicCamera = makeOrthographicCamera({
-    ...state.orthographicCamera,
+    ...state.orthographicCameraSettings,
     getBottomLeftRightTop,
     makeOrthographicCameraResizeHandler,
   });
@@ -43,7 +43,7 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
   scene.add(orthographicCameraGroup);
 
   const groundPlane = makeGroundPlane({
-    ...state.groundPlane,
+    ...state.groundPlaneSettings,
     addCracksToTexture,
     addCracksToTextureFunctions,
     getRandomInteger,
@@ -59,10 +59,10 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
 
   scene.add(prey.rendering);
 
-  if (state.ambientLight.on) {
+  if (state.ambientLightSettings.on) {
     const ambientLight = new AmbientLight(
-      state.ambientLight.color,
-      state.ambientLight.intensity,
+      state.ambientLightSettings.color,
+      state.ambientLightSettings.intensity,
     );
 
     scene.add(ambientLight);
@@ -70,7 +70,7 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
 
   let controls;
 
-  if (state.orbitControls.on) {
+  if (state.orbitControlsSettings.on) {
     controls = new OrbitControls(orthographicCamera, renderer.domElement);
   }
 
@@ -82,7 +82,7 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
   });
 
   const runLogicLoop = makeRunLogicLoop({
-    ...state.logicLoop,
+    ...state.logicLoopSettings,
     input,
     parseInput,
     prey,

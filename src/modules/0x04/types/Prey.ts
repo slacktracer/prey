@@ -1,0 +1,15 @@
+export type Prey = {
+  body: {
+    color: number | string;
+    depth: number;
+    height: number;
+    width: number;
+  };
+  pointer: boolean;
+  position: { x: number; y: number; z: number };
+  //  velocity: { x: number; y: number; z: number };
+  rotateTime: number;
+  rotating: boolean;
+  rotation: { current: { y: number }; target: { y: number } };
+  //  speed: number;
+};
