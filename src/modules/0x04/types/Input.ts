@@ -4,5 +4,6 @@ export type Input = {
     ArrowLeft: boolean;
     ArrowRight: boolean;
     ArrowUp: boolean;
+    [key: string]: boolean;
   };
 };

@@ -8,7 +8,7 @@
     "lint-staged": "lint-staged",
     "prepare": "husky",
     "preview": "vite preview",
-    "x": "deno fmt && eslint . --fix"
+    "x": "deno fmt && eslint . --fix && deno task check"
   },
   "unstable": ["fmt-component"]
 }
