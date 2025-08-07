@@ -24,14 +24,13 @@ import { state } from "./state.js";
 export const boot = async ({ container }: { container: HTMLDivElement }) => {
   const renderer = makeRenderer({ container });
 
-  state.orthographicCameraSettings.renderer = renderer;
-
   const scene = new Scene();
 
   const orthographicCamera = makeOrthographicCamera({
     ...state.orthographicCameraSettings,
     getBottomLeftRightTop,
     makeOrthographicCameraResizeHandler,
+    renderer,
   });
 
   scene.add(orthographicCamera);

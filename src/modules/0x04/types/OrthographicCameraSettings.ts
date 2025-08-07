@@ -1,4 +1,4 @@
-import type { Vector3, WebGLRenderer } from "three";
+import type { Vector3 } from "three";
 
 export type OrthographicCameraSettings = {
   edgeSize: number;
@@ -6,5 +6,4 @@ export type OrthographicCameraSettings = {
   lookAt: Vector3;
   near: number;
   position: Vector3;
-  renderer: undefined | WebGLRenderer;
 };

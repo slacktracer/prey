@@ -11,5 +11,5 @@ export type MakeOrthographicCamera = (input: {
   makeOrthographicCameraResizeHandler: MakeOrthographicCameraResizeHandler;
   near: number;
   position: Vector3;
-  renderer: undefined | WebGLRenderer;
+  renderer: WebGLRenderer;
 }) => OrthographicCamera;

@@ -35,16 +35,14 @@ export const makeOrthographicCamera: MakeOrthographicCamera = ({
 
   orthographicCamera.updateProjectionMatrix();
 
-  if (renderer) {
-    window.addEventListener(
-      "resize",
-      makeOrthographicCameraResizeHandler({
-        edgeSize,
-        orthographicCamera,
-        renderer,
-      }),
-    );
-  }
+  window.addEventListener(
+    "resize",
+    makeOrthographicCameraResizeHandler({
+      edgeSize,
+      orthographicCamera,
+      renderer,
+    }),
+  );
 
   return orthographicCamera;
 };

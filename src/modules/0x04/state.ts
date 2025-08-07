@@ -35,7 +35,6 @@ export const state: State = {
     lookAt: new Vector3(0, 0, 0),
     near: 1,
     position: new Vector3(10, 200, -5),
-    renderer: undefined,
   },
 
   prey: {
