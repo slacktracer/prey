@@ -7,9 +7,9 @@ export type Prey = {
   };
   pointer: boolean;
   position: { x: number; y: number; z: number };
-  //  velocity: { x: number; y: number; z: number };
   rotateTime: number;
   rotating: boolean;
   rotation: { current: { y: number }; target: { y: number } };
-  //  speed: number;
+  speed: number;
+  velocity: { x: number; y: number; z: number };
 };

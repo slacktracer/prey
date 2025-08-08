@@ -3,7 +3,17 @@ import { BoxGeometry, Group, Mesh, MeshPhongMaterial, PointLight } from "three";
 import type { MakePrey } from "../types/MakePrey.js";
 
 export const makePrey: MakePrey = (
-  { body, makePointer, pointer, position, rotateTime, rotating, rotation },
+  {
+    body,
+    makePointer,
+    pointer,
+    position,
+    rotateTime,
+    rotating,
+    rotation,
+    speed,
+    velocity,
+  },
 ) => {
   const preyBodyGeometry = new BoxGeometry(
     body.width,
@@ -60,5 +70,7 @@ export const makePrey: MakePrey = (
     rotateTime,
     rotating,
     rotation,
+    speed,
+    velocity,
   };
 };

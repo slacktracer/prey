@@ -1,6 +1,9 @@
 import { Clock, MathUtils } from "three";
 
+import { getForward } from "../../common/get-forward";
 import type { UpdatePrey } from "../types/UpdatePrey.js";
+
+const clock = new Clock();
 
 const rotatingClock = new Clock();
 
@@ -51,4 +54,31 @@ export const updatePrey: UpdatePrey = ({ commands, prey, preyCommands }) => {
       rotatingClock.stop();
     }
   }
+
+  const deltaTime = clock.getDelta();
+
+  let moveInput = 0;
+
+  if (commands.includes(preyCommands.forward)) {
+    moveInput += 1;
+  }
+
+  const [axis, direction] = getForward({
+    rotation: prey.rendering.rotation.y,
+  });
+  const forward = {
+    x: axis === "x" ? direction : 0,
+    z: axis === "z" ? direction : 0,
+  };
+
+  // Calculate velocity and update position directly
+  prey.velocity.x = forward.x * moveInput * prey.speed;
+  prey.velocity.z = forward.z * moveInput * prey.speed;
+
+  prey.position.x += prey.velocity.x * deltaTime;
+  prey.position.z += prey.velocity.z * deltaTime;
+
+  prey.rendering.position.x = prey.position.x;
+  prey.rendering.position.y = prey.position.y;
+  prey.rendering.position.z = prey.position.z;
 };
