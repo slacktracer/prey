@@ -1,9 +1,7 @@
-import { Clock, MathUtils } from "three";
+import { MathUtils } from "three";
 
 import { getForward } from "../../common/get-forward";
 import type { UpdatePrey } from "../types/UpdatePrey.js";
-
-const rotatingClock = new Clock();
 
 export const updatePrey: UpdatePrey = (
   { commands, deltaTime, prey, preyCommands },
@@ -12,32 +10,34 @@ export const updatePrey: UpdatePrey = (
     if (commands.includes(preyCommands.backward)) {
       prey.rotating = true;
 
-      prey.rotation.target.y = prey.rendering.rotation.y + Math.PI;
+      prey.rotationTimeAccumulator = 0;
 
-      rotatingClock.start();
+      prey.rotation.target.y = prey.rendering.rotation.y + Math.PI;
     }
 
     if (commands.includes(preyCommands.left)) {
       prey.rotating = true;
 
-      prey.rotation.target.y = prey.rendering.rotation.y + Math.PI / 2;
+      prey.rotationTimeAccumulator = 0;
 
-      rotatingClock.start();
+      prey.rotation.target.y = prey.rendering.rotation.y + Math.PI / 2;
     }
 
     if (commands.includes(preyCommands.right)) {
       prey.rotating = true;
 
-      prey.rotation.target.y = prey.rendering.rotation.y - Math.PI / 2;
+      prey.rotationTimeAccumulator = 0;
 
-      rotatingClock.start();
+      prey.rotation.target.y = prey.rendering.rotation.y - Math.PI / 2;
     }
   }
 
   if (prey.rotating) {
+    prey.rotationTimeAccumulator += deltaTime;
+
     const rotatingProgress = Math.min(
       1,
-      rotatingClock.getElapsedTime() / prey.rotateTime,
+      prey.rotationTimeAccumulator / prey.rotateTime,
     );
 
     prey.rendering.rotation.y = MathUtils.lerp(
@@ -50,8 +50,6 @@ export const updatePrey: UpdatePrey = (
       prey.rotating = false;
 
       prey.rotation.current.y = prey.rotation.target.y;
-
-      rotatingClock.stop();
     }
   }
 
