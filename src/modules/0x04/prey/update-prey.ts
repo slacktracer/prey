@@ -3,11 +3,11 @@ import { Clock, MathUtils } from "three";
 import { getForward } from "../../common/get-forward";
 import type { UpdatePrey } from "../types/UpdatePrey.js";
 
-const clock = new Clock();
-
 const rotatingClock = new Clock();
 
-export const updatePrey: UpdatePrey = ({ commands, prey, preyCommands }) => {
+export const updatePrey: UpdatePrey = (
+  { commands, deltaTime, prey, preyCommands },
+) => {
   if (prey.rotating === false) {
     if (commands.includes(preyCommands.backward)) {
       prey.rotating = true;
@@ -54,8 +54,6 @@ export const updatePrey: UpdatePrey = ({ commands, prey, preyCommands }) => {
       rotatingClock.stop();
     }
   }
-
-  const deltaTime = clock.getDelta();
 
   let moveInput = 0;
 

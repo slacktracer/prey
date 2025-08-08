@@ -44,7 +44,7 @@ export const state: State = {
     rotateTime: 0.3,
     rotating: false,
     rotation: { current: { y: 0 }, target: { y: 0 } },
-    speed: 4.0,
+    speed: 0.75,
     velocity: { x: 0, y: 0, z: 0 },
   },
 

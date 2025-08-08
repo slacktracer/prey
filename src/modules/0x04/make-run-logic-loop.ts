@@ -36,7 +36,7 @@ export const makeRunLogicLoop: MakeRunLogicLoop = ({
   ) {
     time.accumulator -= fixedTimeStep;
 
-    updatePrey({ commands, prey, preyCommands });
+    updatePrey({ commands, deltaTime: fixedTimeStep, prey, preyCommands });
 
     numberOfSubstepsTaken += 1;
   }
