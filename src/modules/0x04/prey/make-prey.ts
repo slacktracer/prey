@@ -6,7 +6,7 @@ export const makePrey: MakePrey = (
   {
     body,
     forward,
-    makePointer,
+    makeFin,
     pointer,
     position,
     rotateTime,
@@ -40,17 +40,15 @@ export const makePrey: MakePrey = (
   rendering.add(preyBody);
 
   if (pointer) {
-    rendering.add(makePointer({
-      color: body.color,
+    rendering.add(makeFin({
       depth: body.depth,
       height: body.height,
-      width: body.width,
     }));
   }
 
   const candle = new PointLight(0xffffff, 40, 200);
 
-  candle.position.set(0, body.height + 1, 0);
+  candle.position.set(0, body.height + 2, 0);
 
   candle.castShadow = true;
 

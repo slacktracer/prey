@@ -16,13 +16,16 @@ import { makeRenderer } from "./make-renderer.js";
 import { makeRunAnimationLoop } from "./make-run-animation-loop.js";
 import { makeRunLogicLoop } from "./make-run-logic-loop.js";
 import { isMapValid } from "./maps/is-map-valid.js";
-import { makePointer } from "./prey/make-pointer.js";
+import { makeFin } from "./prey/make-fin.js";
 import { makePrey } from "./prey/make-prey.js";
 import { preyCommands } from "./prey/prey-commands.js";
 import { updatePrey } from "./prey/update-prey.js";
 import { state } from "./state.js";
 import { addWallsToScene } from "./walls/add-walls-to-scene.js";
 
+// TODO
+// decide on moving camera following settings to state
+// review and refactor makeFin
 export const boot = async ({ container }: { container: HTMLDivElement }) => {
   const clock = new Clock();
 
@@ -71,7 +74,7 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
 
   const prey = makePrey({
     ...state.prey,
-    makePointer,
+    makeFin,
   });
 
   scene.add(prey.rendering);

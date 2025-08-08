@@ -1,13 +1,9 @@
 import type { Mesh } from "three";
 
-export type MakePointer = ({
-  color,
+export type MakeFin = ({
   depth,
   height,
-  width,
 }: {
-  color: number | string;
   depth: number;
   height: number;
-  width: number;
 }) => Mesh;

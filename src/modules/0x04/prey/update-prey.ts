@@ -1,6 +1,6 @@
 import { MathUtils } from "three";
 
-import { getForward } from "../../common/get-forward";
+import { getForward } from "../../common/get-forward.js";
 import type { UpdatePrey } from "../types/UpdatePrey.js";
 
 export const updatePrey: UpdatePrey = (

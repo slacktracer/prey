@@ -7,7 +7,7 @@ import type {
 } from "three";
 import type { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
-import type { Prey } from "./Prey";
+import type { Prey } from "./Prey.js";
 
 export type MakeRunAnimationLoop = (input: {
   clock: Clock;
