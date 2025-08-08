@@ -59,9 +59,11 @@ export const updatePrey: UpdatePrey = (
     moveInput += 1;
   }
 
-  const [axis, direction] = getForward({
+  prey.forward = getForward({
     rotation: prey.rendering.rotation.y,
   });
+
+  const [axis, direction] = prey.forward;
   const forward = {
     x: axis === "x" ? direction : 0,
     z: axis === "z" ? direction : 0,

@@ -5,10 +5,12 @@ import type { MakePrey } from "../types/MakePrey.js";
 export const makePrey: MakePrey = (
   {
     body,
+    forward,
     makePointer,
     pointer,
     position,
     rotateTime,
+    rotationTimeAccumulator,
     rotating,
     rotation,
     speed,
@@ -64,10 +66,12 @@ export const makePrey: MakePrey = (
 
   return {
     body,
+    forward,
     pointer,
     position,
     rendering,
     rotateTime,
+    rotationTimeAccumulator,
     rotating,
     rotation,
     speed,
