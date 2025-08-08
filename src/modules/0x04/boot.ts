@@ -15,11 +15,13 @@ import { makeOrthographicCamera } from "./make-orthographic-camera.js";
 import { makeRenderer } from "./make-renderer.js";
 import { makeRunAnimationLoop } from "./make-run-animation-loop.js";
 import { makeRunLogicLoop } from "./make-run-logic-loop.js";
+import { isMapValid } from "./maps/is-map-valid.js";
 import { makePointer } from "./prey/make-pointer.js";
 import { makePrey } from "./prey/make-prey.js";
 import { preyCommands } from "./prey/prey-commands.js";
 import { updatePrey } from "./prey/update-prey.js";
 import { state } from "./state.js";
+import { addWallsToScene } from "./walls/add-walls-to-scene.js";
 
 export const boot = async ({ container }: { container: HTMLDivElement }) => {
   const renderer = makeRenderer({ container });
@@ -50,6 +52,21 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
   });
 
   scene.add(groundPlane);
+
+  const { map } = await import("./maps/map-with-exits.js");
+
+  const mapIsValid = isMapValid({ map });
+
+  if (mapIsValid === false) {
+    throw new Error("Invalid map");
+  }
+
+  addWallsToScene({
+    material: state.wallsSettings.material,
+    map,
+    scene,
+    wallHeight: state.wallsSettings.height,
+  });
 
   const prey = makePrey({
     ...state.prey,

@@ -47,4 +47,17 @@ export const state: State = {
     speed: 4.0,
     velocity: { x: 0, y: 0, z: 0 },
   },
+
+  wallsSettings: {
+    height: 8,
+    material: {
+      color: 0x38393f,
+      flatShading: true,
+      opacity: 0.9,
+      shininess: 0,
+      specular: 0x000000,
+      transparent: true,
+      wireframe: false,
+    },
+  },
 };
