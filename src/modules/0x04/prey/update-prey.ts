@@ -53,12 +53,6 @@ export const updatePrey: UpdatePrey = (
     }
   }
 
-  let moveInput = 0;
-
-  if (commands.includes(preyCommands.forward)) {
-    moveInput += 1;
-  }
-
   prey.forward = getForward({
     rotation: prey.rendering.rotation.y,
   });
@@ -70,8 +64,13 @@ export const updatePrey: UpdatePrey = (
   };
 
   // Calculate velocity and update position directly
-  prey.velocity.x = forward.x * moveInput * prey.speed;
-  prey.velocity.z = forward.z * moveInput * prey.speed;
+  if (commands.includes(preyCommands.forward)) {
+    prey.velocity.x = forward.x * prey.speed;
+    prey.velocity.z = forward.z * prey.speed;
+  } else {
+    prey.velocity.x = 0;
+    prey.velocity.z = 0;
+  }
 
   prey.position.x += prey.velocity.x * deltaTime;
   prey.position.z += prey.velocity.z * deltaTime;
