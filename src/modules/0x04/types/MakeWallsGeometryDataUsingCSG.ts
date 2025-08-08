@@ -1,8 +1,8 @@
 export type MakeWallsGeometryDataUsingCSG = (input: {
+  height: number;
   map: number[][];
   offsetX: number;
   offsetZ: number;
-  wallHeight: number;
 }) => {
   transferables: ArrayBuffer[];
   wallsGeometryData: {

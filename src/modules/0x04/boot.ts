@@ -1,4 +1,4 @@
-import { AmbientLight, Group, Scene } from "three";
+import { AmbientLight, Clock, Group, Scene } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 import { getBottomLeftRightTop } from "../common/get-bottom-left-right-top.js";
@@ -24,6 +24,8 @@ import { state } from "./state.js";
 import { addWallsToScene } from "./walls/add-walls-to-scene.js";
 
 export const boot = async ({ container }: { container: HTMLDivElement }) => {
+  const clock = new Clock();
+
   const renderer = makeRenderer({ container });
 
   const scene = new Scene();
@@ -62,10 +64,9 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
   }
 
   addWallsToScene({
-    material: state.wallsSettings.material,
+    ...state.wallsSettings,
     map,
     scene,
-    wallHeight: state.wallsSettings.height,
   });
 
   const prey = makePrey({
@@ -91,8 +92,11 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
   }
 
   const runAnimationLoop = makeRunAnimationLoop({
+    clock,
     controls,
     orthographicCamera,
+    orthographicCameraGroup,
+    prey,
     renderer,
     scene,
   });

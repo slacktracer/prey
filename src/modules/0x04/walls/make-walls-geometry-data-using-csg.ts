@@ -6,12 +6,12 @@ import { ADDITION, Brush, Evaluator } from "three-bvh-csg";
 import type { MakeWallsGeometryDataUsingCSG } from "../types/MakeWallsGeometryDataUsingCSG.js";
 
 export const makeWallsGeometryDataUsingCSG: MakeWallsGeometryDataUsingCSG = ({
+  height,
   map,
   offsetX,
   offsetZ,
-  wallHeight,
 }) => {
-  const wallHeightOffset = wallHeight / 2;
+  const wallHeightOffset = height / 2;
 
   const csgEvaluator = new Evaluator();
 
@@ -24,7 +24,7 @@ export const makeWallsGeometryDataUsingCSG: MakeWallsGeometryDataUsingCSG = ({
   for (let i = 0; i < map.length; i += 1) {
     for (let j = 0; j < map[i].length; j += 1) {
       if (map[i][j] === 1) {
-        const wallBlockGeometry = new BoxGeometry(1, wallHeight, 1);
+        const wallBlockGeometry = new BoxGeometry(1, height, 1);
 
         geometriesToDispose.push(wallBlockGeometry);
 

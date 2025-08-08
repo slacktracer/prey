@@ -1,6 +1,7 @@
 import type { Scene } from "three";
 
 export type AddWallsToScene = (input: {
+  height: number;
   map: number[][];
   material: {
     color: number;
@@ -12,5 +13,4 @@ export type AddWallsToScene = (input: {
     wireframe: boolean;
   };
   scene: Scene;
-  wallHeight: number;
 }) => void;

@@ -10,9 +10,9 @@ import type { AddWallsToScene } from "../types/AddWallsToScene.js";
 import { makeWallsGeometry } from "./make-walls-geometry.js";
 
 export const addWallsToScene: AddWallsToScene = (
-  { material, map, scene, wallHeight },
+  { height, map, material, scene },
 ) => {
-  const wallInstanceGeometry = new BoxGeometry(1, wallHeight, 1);
+  const wallInstanceGeometry = new BoxGeometry(1, height, 1);
 
   const wallInstanceMaterial = new MeshPhongMaterial(material);
 
@@ -40,7 +40,7 @@ export const addWallsToScene: AddWallsToScene = (
 
   const offsetZ = map.length / 2 - 0.5;
 
-  const wallHeightOffset = wallHeight / 2;
+  const wallHeightOffset = height / 2;
 
   const dummyWallInstance = new Matrix4();
 
@@ -94,6 +94,8 @@ export const addWallsToScene: AddWallsToScene = (
 
     scene.add(walls);
 
+    console.warn("walls replaced");
+
     instancedWalls.geometry.dispose();
 
     instancedWalls.material.dispose();
@@ -102,9 +104,9 @@ export const addWallsToScene: AddWallsToScene = (
   };
 
   makeWallsGeometryDataUsingCSGWorker.postMessage({
+    height,
     map,
     offsetX,
     offsetZ,
-    wallHeight,
   });
 };
