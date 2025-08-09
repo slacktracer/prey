@@ -26,9 +26,6 @@ import { addWallsToScene } from "./walls/add-walls-to-scene.js";
 // TODO
 // decide on moving camera following settings to state
 // review and refactor makeFin
-// reconsider the camera follow position offset,
-// maybe not when rotating?
-// finally get to collision and safe max distance to move
 export const boot = async ({ container }: { container: HTMLDivElement }) => {
   const clock = new Clock();
 

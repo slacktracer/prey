@@ -72,35 +72,30 @@ export const updatePrey: UpdatePrey = (
     prey.velocity.z = 0;
   }
 
+  const mapXOffset = map[0].length / 2 - 0.5;
+
+  const mapZOffset = map.length / 2 - 0.5;
+
+  const currentForwardVelocitySign = Math.sign(prey.velocity[axis]);
+
+  const bodyOffset = currentForwardVelocitySign * prey.body.width / 2;
+
   const targetPosition = {
     x: prey.position.x + prey.velocity.x * deltaTime,
     z: prey.position.z + prey.velocity.z * deltaTime,
   };
 
-  const x = checkCollision({ map, position: targetPosition });
+  const mapX = Math.round(targetPosition.x + bodyOffset) + mapXOffset;
+  const mapZ = Math.round(targetPosition.z + bodyOffset) + mapZOffset;
 
-  if (x) {
+  if (map[mapZ] && map[mapZ][mapX] === 1) {
     return;
   }
 
-  prey.position.x += prey.velocity.x * deltaTime;
-  prey.position.z += prey.velocity.z * deltaTime;
+  prey.position.x = targetPosition.x;
+  prey.position.z = targetPosition.z;
 
   prey.rendering.position.x = prey.position.x;
   prey.rendering.position.y = prey.position.y;
   prey.rendering.position.z = prey.position.z;
-};
-
-const checkCollision: (
-  input: { map: number[][]; position: { x: number; z: number } },
-) => boolean = ({ map, position }) => {
-  const offsetX = map[0].length / 2 - 0.5;
-
-  const offsetZ = map.length / 2 - 0.5;
-
-  const mapX = Math.round(position.x) + offsetX;
-
-  const mapZ = Math.round(position.z) + offsetZ;
-
-  return map[mapZ][mapX] === 1;
 };
