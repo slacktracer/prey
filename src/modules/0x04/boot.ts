@@ -4,6 +4,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { getBottomLeftRightTop } from "../common/get-bottom-left-right-top.js";
 import { getRandomInteger } from "../common/get-random-integer.js";
 import { makeOrthographicCameraResizeHandler } from "../common/make-ortographic-camera-resize-handler.js";
+import { makeBrute } from "./brute/make-brute";
 import { addCracksToTexture } from "./floor/add-cracks-to-texture.js";
 import { addCracksToTextureFunctions } from "./floor/add-cracks-to-texture-functions.js";
 import { makeGroundPlane } from "./floor/make-ground-plane.js";
@@ -79,6 +80,10 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
 
   scene.add(prey.rendering);
 
+  const brute = makeBrute();
+
+  scene.add(brute.rendering);
+
   if (state.ambientLightSettings.on) {
     const ambientLight = new AmbientLight(
       state.ambientLightSettings.color,
@@ -106,6 +111,7 @@ export const boot = async ({ container }: { container: HTMLDivElement }) => {
 
   const runLogicLoop = makeRunLogicLoop({
     ...state.logicLoopSettings,
+    brute,
     input,
     map,
     parseInput,

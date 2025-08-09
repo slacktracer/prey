@@ -6,6 +6,12 @@ import type { UpdatePrey } from "../types/UpdatePrey.js";
 export const updatePrey: UpdatePrey = (
   { commands, deltaTime, map, prey, preyCommands },
 ) => {
+  if (prey.caught) {
+    prey.rendering.children[0].material.color.setHex(0x000000);
+    prey.rendering.children[0].material.needsUpdate = true;
+    return;
+  }
+
   if (prey.rotating === false) {
     if (commands.includes(preyCommands.backward)) {
       prey.rotating = true;
