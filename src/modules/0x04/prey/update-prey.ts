@@ -4,7 +4,7 @@ import { getForward } from "../../common/get-forward.js";
 import type { UpdatePrey } from "../types/UpdatePrey.js";
 
 export const updatePrey: UpdatePrey = (
-  { commands, deltaTime, prey, preyCommands },
+  { commands, deltaTime, map, prey, preyCommands },
 ) => {
   if (prey.rotating === false) {
     if (commands.includes(preyCommands.backward)) {
@@ -58,12 +58,12 @@ export const updatePrey: UpdatePrey = (
   });
 
   const [axis, direction] = prey.forward;
+
   const forward = {
     x: axis === "x" ? direction : 0,
     z: axis === "z" ? direction : 0,
   };
 
-  // Calculate velocity and update position directly
   if (commands.includes(preyCommands.forward)) {
     prey.velocity.x = forward.x * prey.speed;
     prey.velocity.z = forward.z * prey.speed;
@@ -72,10 +72,35 @@ export const updatePrey: UpdatePrey = (
     prey.velocity.z = 0;
   }
 
+  const targetPosition = {
+    x: prey.position.x + prey.velocity.x * deltaTime,
+    z: prey.position.z + prey.velocity.z * deltaTime,
+  };
+
+  const x = checkCollision({ map, position: targetPosition });
+
+  if (x) {
+    return;
+  }
+
   prey.position.x += prey.velocity.x * deltaTime;
   prey.position.z += prey.velocity.z * deltaTime;
 
   prey.rendering.position.x = prey.position.x;
   prey.rendering.position.y = prey.position.y;
   prey.rendering.position.z = prey.position.z;
+};
+
+const checkCollision: (
+  input: { map: number[][]; position: { x: number; z: number } },
+) => boolean = ({ map, position }) => {
+  const offsetX = map[0].length / 2 - 0.5;
+
+  const offsetZ = map.length / 2 - 0.5;
+
+  const mapX = Math.round(position.x) + offsetX;
+
+  const mapZ = Math.round(position.z) + offsetZ;
+
+  return map[mapZ][mapX] === 1;
 };

@@ -3,6 +3,7 @@ import type { MakeRunLogicLoop } from "./types/MakeRunLogicLoop.js";
 export const makeRunLogicLoop: MakeRunLogicLoop = ({
   fixedTimeStep,
   input,
+  map,
   maximumNumberOfSubsteps,
   parseInput,
   prey,
@@ -36,7 +37,7 @@ export const makeRunLogicLoop: MakeRunLogicLoop = ({
   ) {
     time.accumulator -= fixedTimeStep;
 
-    updatePrey({ commands, deltaTime: fixedTimeStep, prey, preyCommands });
+    updatePrey({ commands, deltaTime: fixedTimeStep, map, prey, preyCommands });
 
     numberOfSubstepsTaken += 1;
   }

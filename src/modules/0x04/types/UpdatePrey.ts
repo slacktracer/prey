@@ -6,6 +6,7 @@ import type { PreyCommands } from "./PreyCommands.js";
 export type UpdatePrey = (input: {
   commands: symbol[];
   deltaTime: number;
+  map: number[][];
   prey: Prey & { rendering: Group };
   preyCommands: PreyCommands;
 }) => void;
