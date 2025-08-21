@@ -1,0 +1,14 @@
+{
+  "tasks": {
+    "build": "vite build",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "dev": "vite dev",
+    "lint": "eslint .",
+    "lint-staged": "lint-staged",
+    "prepare": "husky",
+    "preview": "vite preview",
+    "x": "deno fmt && eslint . --fix && deno task check"
+  },
+  "unstable": ["fmt-component"]
+}
