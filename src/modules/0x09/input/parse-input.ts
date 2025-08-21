@@ -1,24 +1,24 @@
+import { movingThingCommands } from "../moving-thing.js";
 import type { ParseInput } from "../types/ParseInput.js";
-import { commands } from "./commands.js";
 
 export const parseInput: ParseInput = ({ input }) => {
-  const commandList = [];
+  const commands = [];
 
   if (input.pressedKeys.ArrowDown === true) {
-    commandList.push(commands.backward);
+    commands.push(movingThingCommands.backward);
   }
 
   if (input.pressedKeys.ArrowLeft === true) {
-    commandList.push(commands.left);
+    commands.push(movingThingCommands.left);
   }
 
   if (input.pressedKeys.ArrowRight === true) {
-    commandList.push(commands.right);
+    commands.push(movingThingCommands.right);
   }
 
   if (input.pressedKeys.ArrowUp === true) {
-    commandList.push(commands.forward);
+    commands.push(movingThingCommands.forward);
   }
 
-  return commandList;
+  return commands;
 };

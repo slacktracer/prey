@@ -41,4 +41,26 @@ export const makeMovingThing = () => {
   return { rendering };
 };
 
-export const updateMovingThing = () => {};
+export const movingThingCommands = {
+  backward: Symbol("backward"),
+  left: Symbol("left"),
+  right: Symbol("right"),
+  forward: Symbol("forward"),
+} as const;
+
+export type MovingThingCommands = typeof movingThingCommands;
+
+export const updateMovingThing = (
+  { commands, movingThing }: {
+    commands: symbol[];
+    movingThing: { rendering: Group };
+  },
+) => {
+  if (commands.includes(movingThingCommands.forward)) {
+    movingThing.rendering.position.x += 1;
+  }
+
+  if (commands.includes(movingThingCommands.backward)) {
+    movingThing.rendering.position.x -= 1;
+  }
+};

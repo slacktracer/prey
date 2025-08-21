@@ -7,7 +7,11 @@ import { startCollectingInput } from "./input/start-collecting-input.js";
 import { makeRunAnimationLoop } from "./loops/make-run-animation-loop.js";
 import { makeOrthographicCamera } from "./make-orthographic-camera.js";
 import { makeRenderer } from "./make-renderer.js";
-import { makeMovingThing } from "./moving-thing";
+import {
+  makeMovingThing,
+  movingThingCommands,
+  updateMovingThing,
+} from "./moving-thing.js";
 import { settings } from "./settings.js";
 import type { Boot } from "./types/Boot.js";
 
@@ -42,10 +46,9 @@ export const boot: Boot = async ({ container }) => {
   startCollectingInput({ input });
 
   renderer.setAnimationLoop(() => {
-    const commandList = parseInput({ input });
+    const commands = parseInput({ input, movingThingCommands });
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    commandList.length && console.info(commandList);
+    updateMovingThing({ commands, movingThing });
 
     runAnimationLoop();
   });
