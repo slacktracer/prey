@@ -1,10 +1,13 @@
+import { doPlacesOverlap } from "../common/do-places-overlap.js";
+import { getPlace } from "../common/get-place.js";
 import type { MovingThing } from "./MovingThing.js";
 
 export function updateMovingThing(
   this: MovingThing,
-  { commands, deltaTime }: {
+  { commands, deltaTime, otherMovingThing }: {
     commands: symbol[];
     deltaTime: number;
+    otherMovingThing: MovingThing;
   },
 ) {
   if (!this.movement.isMoving) {
@@ -47,6 +50,21 @@ export function updateMovingThing(
 
         break;
     }
+
+    {
+      const { x, z } = this.position.target;
+
+      const side = this.renderingSettings.depth;
+
+      const willOverlap = doPlacesOverlap({
+        placeA: getPlace({ side, x, z }),
+        placeB: otherMovingThing.place,
+      });
+
+      if (willOverlap === true) {
+        this.position.target = { ...this.position.current };
+      }
+    }
   }
 
   if (this.movement.isMoving) {
@@ -69,7 +87,7 @@ export function updateMovingThing(
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       ((this.position.current.x !== this.position.target.x) ||
         (this.position.current.z !== this.position.target.z)) &&
-        console.log(this.position.target.x, this.position.target.z);
+        console.log("mt", this.position.target.x, this.position.target.z);
 
       this.position.current.x = this.position.target.x;
       this.position.current.z = this.position.target.z;

@@ -1,3 +1,4 @@
+import { getPlace } from "../common/get-place.js";
 import { makeMovingThingRendering } from "./make-moving-thing-rendering.js";
 import { movingThingCommands } from "./moving-thing-commands.js";
 import type { MovingThing } from "./MovingThing.js";
@@ -17,6 +18,14 @@ export const makeOtherMovingThing = (
       animationTime: 0,
       commandQueue: [],
       isMoving: false,
+    },
+
+    get place() {
+      return getPlace({
+        side: this.renderingSettings.depth,
+        x: this.position.current.x,
+        z: this.position.current.z,
+      });
     },
 
     position: {

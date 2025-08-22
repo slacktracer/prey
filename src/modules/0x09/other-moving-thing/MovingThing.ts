@@ -1,7 +1,7 @@
 import type { Group } from "three";
 
 import type { movingThingCommands } from "./moving-thing-commands.js";
-import type { MovingThingRenderingSettings } from "./MovingThingRenderingSettings";
+import type { MovingThingRenderingSettings } from "./MovingThingRenderingSettings.js";
 
 export type MovingThing = {
   commands: typeof movingThingCommands;
@@ -12,6 +12,8 @@ export type MovingThing = {
     commandQueue: symbol[];
     isMoving: boolean;
   };
+
+  place: { x: number[]; z: number[] };
 
   position: {
     current: { x: number; y: number; z: number };

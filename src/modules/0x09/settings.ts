@@ -20,7 +20,7 @@ export const settings: Settings = {
   },
 
   orthographicCameraSettings: {
-    edgeSize: 8,
+    edgeSize: 12,
     far: 1000,
     lookAt: { x: 0, y: 0, z: 0 },
     near: 1,

@@ -25,7 +25,11 @@ export const makeRunLogicLoop: MakeRunLogicLoop = ({
   ) {
     time.accumulator -= fixedTimeStep;
 
-    movingThing.update({ commands, deltaTime: fixedTimeStep });
+    movingThing.update({
+      commands,
+      deltaTime: fixedTimeStep,
+      otherMovingThing,
+    });
 
     otherMovingThing.update({ commands: [], deltaTime: fixedTimeStep });
 

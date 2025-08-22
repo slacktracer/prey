@@ -1,3 +1,4 @@
+import { getRandomInteger } from "../../common/get-random-integer.js";
 import type { MovingThing } from "./MovingThing.js";
 
 export function updateMovingThing(
@@ -10,7 +11,13 @@ export function updateMovingThing(
   if (!this.movement.isMoving) {
     // let command = commands.shift();
 
-    const command = this.commands.forward;
+    const movingThingCommands = Object.values(this.commands);
+
+    const movingThingCommand = movingThingCommands[
+      getRandomInteger({ max: movingThingCommands.length - 1, min: 0 })
+    ];
+
+    const command = Math.random() < 0.05 ? movingThingCommand : undefined;
 
     switch (command) {
       case this.commands.forward:
@@ -71,7 +78,7 @@ export function updateMovingThing(
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       ((this.position.current.x !== this.position.target.x) ||
         (this.position.current.z !== this.position.target.z)) &&
-        console.log(this.position.target.x, this.position.target.z);
+        console.log("other mt", this.position.target.x, this.position.target.z);
 
       this.position.current.x = this.position.target.x;
       this.position.current.z = this.position.target.z;

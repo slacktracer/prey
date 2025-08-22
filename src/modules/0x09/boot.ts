@@ -35,9 +35,9 @@ export const boot: Boot = async ({ container }) => {
   const movingThing = makeMovingThing({
     renderingSettings: {
       color: 0xf887c7,
-      depth: 0.5,
-      height: 1,
-      width: 0.5,
+      depth: 1,
+      height: 2,
+      width: 1,
     },
   });
 
@@ -45,10 +45,10 @@ export const boot: Boot = async ({ container }) => {
 
   const otherMovingThing = makeOtherMovingThing({
     renderingSettings: {
-      color: 0xf887c7,
-      depth: 1,
-      height: 2,
-      width: 1,
+      color: 0x242c8542,
+      depth: 2,
+      height: 3,
+      width: 2,
     },
   });
 
