@@ -1,10 +1,10 @@
 import type { Group } from "three";
 
-import type { movingThingCommands } from "./moving-thing-commands.js";
-import type { MovingThingRenderingSettings } from "./MovingThingRenderingSettings.js";
+import type { otherMovingThingCommands } from "./other-moving-thing-commands.js";
+import type { OtherMovingThingRenderingSettings } from "./OtherMovingThingRenderingSettings.js";
 
-export type MovingThing = {
-  commands: typeof movingThingCommands;
+export type OtherMovingThing = {
+  commands: typeof otherMovingThingCommands;
 
   movement: {
     animationDuration: number;
@@ -21,7 +21,7 @@ export type MovingThing = {
 
   rendering: Group;
 
-  renderingSettings: MovingThingRenderingSettings;
+  renderingSettings: OtherMovingThingRenderingSettings;
 
   update: (input: { commands: symbol[]; deltaTime: number }) => void;
 };

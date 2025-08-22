@@ -1,8 +1,8 @@
 import { getRandomInteger } from "../../common/get-random-integer.js";
-import type { MovingThing } from "./MovingThing.js";
+import type { OtherMovingThing } from "./OtherMovingThing.js";
 
-export function updateMovingThing(
-  this: MovingThing,
+export function updateOtherMovingThing(
+  this: OtherMovingThing,
   { /*commands, */ deltaTime }: {
     commands: symbol[];
     deltaTime: number;
@@ -11,13 +11,13 @@ export function updateMovingThing(
   if (!this.movement.isMoving) {
     // let command = commands.shift();
 
-    const movingThingCommands = Object.values(this.commands);
+    const otherMovingThingCommands = Object.values(this.commands);
 
-    const movingThingCommand = movingThingCommands[
-      getRandomInteger({ max: movingThingCommands.length - 1, min: 0 })
+    const otherMovingThingCommand = otherMovingThingCommands[
+      getRandomInteger({ max: otherMovingThingCommands.length - 1, min: 0 })
     ];
 
-    const command = Math.random() < 0.05 ? movingThingCommand : undefined;
+    const command = Math.random() < 0.05 ? otherMovingThingCommand : undefined;
 
     switch (command) {
       case this.commands.forward:

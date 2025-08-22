@@ -1,4 +1,4 @@
-export const movingThingCommands = {
+export const otherMovingThingCommands = {
   backward: Symbol("backward"),
   left: Symbol("left"),
   right: Symbol("right"),
