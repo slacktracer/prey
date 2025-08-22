@@ -2,16 +2,12 @@ import { AmbientLight, Scene } from "three";
 
 import { makeGroundPlane } from "./ground/make-ground-plane.js";
 import { input } from "./input/input.js";
-import { parseInput } from "./input/parse-input";
 import { startCollectingInput } from "./input/start-collecting-input.js";
 import { makeRunAnimationLoop } from "./loops/make-run-animation-loop.js";
+import { makeRunLogicLoop } from "./loops/make-run-logic-loop.js";
 import { makeOrthographicCamera } from "./make-orthographic-camera.js";
 import { makeRenderer } from "./make-renderer.js";
-import {
-  makeMovingThing,
-  movingThingCommands,
-  updateMovingThing,
-} from "./moving-thing.js";
+import { makeMovingThing } from "./moving-thing/make-moving-thing.js";
 import { settings } from "./settings.js";
 import type { Boot } from "./types/Boot.js";
 
@@ -32,6 +28,24 @@ export const boot: Boot = async ({ container }) => {
 
   scene.add(groundPlane);
 
+  const movingThing = makeMovingThing({
+    renderingSettings: {
+      color: 0xf887c7,
+      depth: 0.5,
+      height: 1,
+      width: 0.5,
+    },
+  });
+
+  scene.add(movingThing.rendering);
+
+  startCollectingInput({ input });
+
+  const runLogicLoop = makeRunLogicLoop({
+    ...settings.logicLoopSettings,
+    movingThing,
+  });
+
   const runAnimationLoop = makeRunAnimationLoop({
     orthographicCamera,
     orthographicCameraGroup,
@@ -39,16 +53,8 @@ export const boot: Boot = async ({ container }) => {
     scene,
   });
 
-  const movingThing = makeMovingThing();
-
-  scene.add(movingThing.rendering);
-
-  startCollectingInput({ input });
-
   renderer.setAnimationLoop(() => {
-    const commands = parseInput({ input, movingThingCommands });
-
-    updateMovingThing({ commands, movingThing });
+    runLogicLoop({ deltaTime: settings.logicLoopSettings.fixedTimeStep });
 
     runAnimationLoop();
   });
