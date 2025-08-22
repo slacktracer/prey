@@ -5,6 +5,11 @@ import type { MovingThingRenderingSettings } from "./MovingThingRenderingSetting
 export const makeMovingThingRendering = (
   { renderingSettings }: { renderingSettings: MovingThingRenderingSettings },
 ) => {
+  const renderingOffset = {
+    x: 0 + renderingSettings.depth / 2,
+    z: 0 + renderingSettings.width / 2,
+  };
+
   const movingThingBodyGeometry = new BoxGeometry(
     renderingSettings.width,
     renderingSettings.height,
@@ -21,7 +26,11 @@ export const makeMovingThingRendering = (
     movingThingBodyMaterial,
   );
 
-  movingThingBody.position.set(0, renderingSettings.height / 2, 0);
+  movingThingBody.position.set(
+    0 + renderingOffset.x,
+    renderingSettings.height / 2,
+    0 + renderingOffset.z,
+  );
 
   const rendering = new Group();
 
@@ -29,7 +38,11 @@ export const makeMovingThingRendering = (
 
   const candle = new PointLight(0xf887c7, 40, 8);
 
-  candle.position.set(0, renderingSettings.height + 2, 0);
+  candle.position.set(
+    0 + renderingOffset.x,
+    renderingSettings.height + 2,
+    0 + renderingOffset.z,
+  );
 
   candle.castShadow = true;
 

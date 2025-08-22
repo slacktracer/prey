@@ -59,6 +59,7 @@ export const boot: Boot = async ({ container }) => {
   const runLogicLoop = makeRunLogicLoop({
     ...settings.logicLoopSettings,
     movingThing,
+    otherMovingThing,
   });
 
   const runAnimationLoop = makeRunAnimationLoop({

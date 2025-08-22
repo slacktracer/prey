@@ -26,6 +26,8 @@ export const makeMovingThing = (
 
     rendering: makeMovingThingRendering({ renderingSettings }),
 
+    renderingSettings,
+
     update: updateMovingThing,
   };
 

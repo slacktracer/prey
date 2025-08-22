@@ -4,7 +4,7 @@ export const settings: Settings = {
   ambientLightSettings: {
     color: 0xffffff,
     intensity: 2,
-    on: true,
+    on: false,
   },
 
   groundPlaneSettings: {

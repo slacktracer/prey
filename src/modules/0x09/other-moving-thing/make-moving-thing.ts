@@ -13,7 +13,7 @@ export const makeOtherMovingThing = (
     commands: movingThingCommands,
 
     movement: {
-      animationDuration: 0.3,
+      animationDuration: 0.9,
       animationTime: 0,
       commandQueue: [],
       isMoving: false,
@@ -25,6 +25,8 @@ export const makeOtherMovingThing = (
     },
 
     rendering: makeMovingThingRendering({ renderingSettings }),
+
+    renderingSettings,
 
     update: updateMovingThing,
   };
