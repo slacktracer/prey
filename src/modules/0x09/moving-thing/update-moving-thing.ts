@@ -1,5 +1,4 @@
-import { doPlacesOverlap } from "../common/do-places-overlap.js";
-import { getPlace } from "../common/get-place.js";
+import { detectOverlap } from "../common/detect-overlap.js";
 import type { OtherMovingThing } from "../other-moving-thing/OtherMovingThing.js";
 import type { MovingThing } from "./MovingThing.js";
 
@@ -52,32 +51,13 @@ export function updateMovingThing(
         break;
     }
 
-    {
-      const side = this.renderingSettings.side;
+    const willOverlap = detectOverlap({
+      thing: this,
+      thingList: otherMovingThings,
+    });
 
-      const { x, z } = this.position.target;
-
-      const movingThingTargetPlace = getPlace({ side, x, z });
-
-      const willOverlap = otherMovingThings.some((otherMovingThing) => {
-        const otherMovingThingTargetPlace = getPlace({
-          side: otherMovingThing.renderingSettings.side,
-          x: otherMovingThing.position.target.x,
-          z: otherMovingThing.position.target.z,
-        });
-
-        return doPlacesOverlap({
-          placeA: movingThingTargetPlace,
-          placeB: otherMovingThing.place,
-        }) || doPlacesOverlap({
-          placeA: movingThingTargetPlace,
-          placeB: otherMovingThingTargetPlace,
-        });
-      });
-
-      if (willOverlap === true) {
-        this.position.target = { ...this.position.current };
-      }
+    if (willOverlap === true) {
+      this.position.target = { ...this.position.current };
     }
   }
 
