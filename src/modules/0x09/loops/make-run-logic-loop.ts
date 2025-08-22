@@ -6,7 +6,7 @@ export const makeRunLogicLoop: MakeRunLogicLoop = ({
   fixedTimeStep,
   maximumNumberOfSubsteps,
   movingThing,
-  otherMovingThing,
+  otherMovingThings,
   time,
 }) =>
 ({ deltaTime }) => {
@@ -28,10 +28,12 @@ export const makeRunLogicLoop: MakeRunLogicLoop = ({
     movingThing.update({
       commands,
       deltaTime: fixedTimeStep,
-      otherMovingThing,
+      otherMovingThings,
     });
 
-    otherMovingThing.update({ commands: [], deltaTime: fixedTimeStep });
+    otherMovingThings.forEach((otherMovingThing) => {
+      otherMovingThing.update({ commands: [], deltaTime: fixedTimeStep });
+    });
 
     numberOfSubstepsTaken += 1;
   }

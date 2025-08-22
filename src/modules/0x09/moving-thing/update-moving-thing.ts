@@ -1,13 +1,14 @@
 import { doPlacesOverlap } from "../common/do-places-overlap.js";
 import { getPlace } from "../common/get-place.js";
+import type { OtherMovingThing } from "../other-moving-thing/OtherMovingThing.js";
 import type { MovingThing } from "./MovingThing.js";
 
 export function updateMovingThing(
   this: MovingThing,
-  { commands, deltaTime, otherMovingThing }: {
+  { commands, deltaTime, otherMovingThings }: {
     commands: symbol[];
     deltaTime: number;
-    otherMovingThing: MovingThing;
+    otherMovingThings: OtherMovingThing[];
   },
 ) {
   if (!this.movement.isMoving) {
@@ -56,9 +57,11 @@ export function updateMovingThing(
 
       const side = this.renderingSettings.side;
 
-      const willOverlap = doPlacesOverlap({
-        placeA: getPlace({ side, x, z }),
-        placeB: otherMovingThing.place,
+      const willOverlap = otherMovingThings.some((otherMovingThing) => {
+        return doPlacesOverlap({
+          placeA: getPlace({ side, x, z }),
+          placeB: otherMovingThing.place,
+        });
       });
 
       if (willOverlap === true) {
@@ -84,10 +87,9 @@ export function updateMovingThing(
       (this.position.target.z - this.position.current.z) * easeOutProgress;
 
     if (progress >= 1) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      ((this.position.current.x !== this.position.target.x) ||
-        (this.position.current.z !== this.position.target.z)) &&
-        console.log("mt", this.position.target.x, this.position.target.z);
+      // ((this.position.current.x !== this.position.target.x) ||
+      //   (this.position.current.z !== this.position.target.z)) &&
+      //   console.log("mt", this.position.target.x, this.position.target.z);
 
       this.position.current.x = this.position.target.x;
       this.position.current.z = this.position.target.z;

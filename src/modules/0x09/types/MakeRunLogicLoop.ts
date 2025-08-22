@@ -5,6 +5,6 @@ export type MakeRunLogicLoop = (input: {
   fixedTimeStep: number;
   maximumNumberOfSubsteps: number;
   movingThing: MovingThing;
-  otherMovingThing: OtherMovingThing;
+  otherMovingThings: OtherMovingThing[];
   time: { accumulator: number };
 }) => (input: { deltaTime: number }) => void;

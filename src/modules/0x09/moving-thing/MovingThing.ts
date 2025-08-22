@@ -1,5 +1,6 @@
 import type { Group } from "three";
 
+import type { OtherMovingThing } from "../other-moving-thing/OtherMovingThing.js";
 import type { movingThingCommands } from "./moving-thing-commands.js";
 import type { MovingThingRenderingSettings } from "./MovingThingRenderingSettings.js";
 
@@ -27,7 +28,7 @@ export type MovingThing = {
     input: {
       commands: symbol[];
       deltaTime: number;
-      otherMovingThing: MovingThing;
+      otherMovingThings: OtherMovingThing[];
     },
   ) => void;
 };

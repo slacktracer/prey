@@ -42,22 +42,28 @@ export const boot: Boot = async ({ container }) => {
 
   scene.add(movingThing.rendering);
 
-  const otherMovingThing = makeOtherMovingThing({
-    renderingSettings: {
-      color: 0x242c8542,
-      height: 3,
-      side: 2,
-    },
-  });
+  const otherMovingThings = [];
 
-  scene.add(otherMovingThing.rendering);
+  for (let i = 0; i < 10; i += 1) {
+    const otherMovingThing = makeOtherMovingThing({
+      renderingSettings: {
+        color: 0x242c8542,
+        height: 3,
+        side: 2,
+      },
+    });
+
+    scene.add(otherMovingThing.rendering);
+
+    otherMovingThings.push(otherMovingThing);
+  }
 
   startCollectingInput({ input });
 
   const runLogicLoop = makeRunLogicLoop({
     ...settings.logicLoopSettings,
     movingThing,
-    otherMovingThing,
+    otherMovingThings,
   });
 
   const runAnimationLoop = makeRunAnimationLoop({

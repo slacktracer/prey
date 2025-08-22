@@ -75,10 +75,9 @@ export function updateOtherMovingThing(
       (this.position.target.z - this.position.current.z) * easeOutProgress;
 
     if (progress >= 1) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      ((this.position.current.x !== this.position.target.x) ||
-        (this.position.current.z !== this.position.target.z)) &&
-        console.log("other mt", this.position.target.x, this.position.target.z);
+      // ((this.position.current.x !== this.position.target.x) ||
+      //   (this.position.current.z !== this.position.target.z)) &&
+      //   console.log("other mt", this.position.target.x, this.position.target.z);
 
       this.position.current.x = this.position.target.x;
       this.position.current.z = this.position.target.z;
