@@ -44,7 +44,7 @@ export const boot: Boot = async ({ container }) => {
 
   const otherMovingThings = [];
 
-  const otherMovingThingsCount = 10;
+  const otherMovingThingsCount = 12;
 
   const startingI = 1;
 
@@ -103,7 +103,7 @@ export const boot: Boot = async ({ container }) => {
 function getXZAround00(count: number, i: number) {
   const angle = (i / count) * Math.PI * 2;
 
-  const radius = 4;
+  const radius = count / 2;
 
   return {
     x: Math.round(Math.cos(angle) * radius),
