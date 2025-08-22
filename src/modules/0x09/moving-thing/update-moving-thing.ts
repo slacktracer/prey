@@ -53,14 +53,25 @@ export function updateMovingThing(
     }
 
     {
-      const { x, z } = this.position.target;
-
       const side = this.renderingSettings.side;
 
+      const { x, z } = this.position.target;
+
+      const movingThingTargetPlace = getPlace({ side, x, z });
+
       const willOverlap = otherMovingThings.some((otherMovingThing) => {
+        const otherMovingThingTargetPlace = getPlace({
+          side: otherMovingThing.renderingSettings.side,
+          x: otherMovingThing.position.target.x,
+          z: otherMovingThing.position.target.z,
+        });
+
         return doPlacesOverlap({
-          placeA: getPlace({ side, x, z }),
+          placeA: movingThingTargetPlace,
           placeB: otherMovingThing.place,
+        }) || doPlacesOverlap({
+          placeA: movingThingTargetPlace,
+          placeB: otherMovingThingTargetPlace,
         });
       });
 
