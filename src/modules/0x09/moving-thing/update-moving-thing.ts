@@ -57,13 +57,13 @@ export function updateMovingThing(
       1,
     );
 
-    const easeProgress = 1 - Math.pow(1 - progress, 3);
+    const easeOutProgress = 1 - Math.pow(1 - progress, 3);
 
     this.rendering.position.x = this.position.current.x +
-      (this.position.target.x - this.position.current.x) * easeProgress;
+      (this.position.target.x - this.position.current.x) * easeOutProgress;
 
     this.rendering.position.z = this.position.current.z +
-      (this.position.target.z - this.position.current.z) * easeProgress;
+      (this.position.target.z - this.position.current.z) * easeOutProgress;
 
     if (progress >= 1) {
       this.position.current.x = this.position.target.x;

@@ -1,4 +1,4 @@
-import { AmbientLight, Scene } from "three";
+import { AmbientLight, Clock, Scene } from "three";
 
 import { makeGroundPlane } from "./ground/make-ground-plane.js";
 import { input } from "./input/input.js";
@@ -8,8 +8,11 @@ import { makeRunLogicLoop } from "./loops/make-run-logic-loop.js";
 import { makeOrthographicCamera } from "./make-orthographic-camera.js";
 import { makeRenderer } from "./make-renderer.js";
 import { makeMovingThing } from "./moving-thing/make-moving-thing.js";
+import { orthographicCameraMovement } from "./orthographicCameraMovement.js";
 import { settings } from "./settings.js";
 import type { Boot } from "./types/Boot.js";
+
+const clock = new Clock();
 
 export const boot: Boot = async ({ container }) => {
   const renderer = makeRenderer({ container });
@@ -49,14 +52,17 @@ export const boot: Boot = async ({ container }) => {
   const runAnimationLoop = makeRunAnimationLoop({
     orthographicCamera,
     orthographicCameraGroup,
+    orthographicCameraMovement,
     renderer,
     scene,
   });
 
   renderer.setAnimationLoop(() => {
+    const deltaTime = clock.getDelta();
+
     runLogicLoop({ deltaTime: settings.logicLoopSettings.fixedTimeStep });
 
-    runAnimationLoop();
+    runAnimationLoop({ deltaTime, movingThing });
   });
 
   if (settings.ambientLightSettings.on) {
