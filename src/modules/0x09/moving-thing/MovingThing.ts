@@ -9,7 +9,6 @@ export type MovingThing = {
   movement: {
     animationDuration: number;
     animationTime: number;
-    commandQueue: symbol[];
     isMoving: boolean;
   };
 

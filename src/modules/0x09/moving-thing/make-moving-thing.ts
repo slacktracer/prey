@@ -16,7 +16,6 @@ export const makeMovingThing = (
     movement: {
       animationDuration: 0.3,
       animationTime: 0,
-      commandQueue: [],
       isMoving: false,
     },
 
