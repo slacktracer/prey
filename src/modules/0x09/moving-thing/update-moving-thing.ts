@@ -54,7 +54,7 @@ export function updateMovingThing(
     {
       const { x, z } = this.position.target;
 
-      const side = this.renderingSettings.depth;
+      const side = this.renderingSettings.side;
 
       const willOverlap = doPlacesOverlap({
         placeA: getPlace({ side, x, z }),

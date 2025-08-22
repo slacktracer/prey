@@ -8,14 +8,14 @@ export const makeOtherMovingThingRendering = (
   },
 ) => {
   const renderingOffset = {
-    x: 0 + renderingSettings.depth / 2,
-    z: 0 + renderingSettings.width / 2,
+    x: 0 + renderingSettings.side / 2,
+    z: 0 + renderingSettings.side / 2,
   };
 
   const otherMovingThingBodyGeometry = new BoxGeometry(
-    renderingSettings.width,
+    renderingSettings.side,
     renderingSettings.height,
-    renderingSettings.depth,
+    renderingSettings.side,
   );
 
   const otherMovingThingBodyMaterial = new MeshPhongMaterial({

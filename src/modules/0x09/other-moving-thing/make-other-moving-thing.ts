@@ -21,7 +21,7 @@ export const makeOtherMovingThing = (
 
     get place() {
       return getPlace({
-        side: this.renderingSettings.depth,
+        side: this.renderingSettings.side,
         x: this.position.current.x,
         z: this.position.current.z,
       });
