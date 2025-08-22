@@ -13,7 +13,7 @@ export const makeMovingThing = (
     commands: movingThingCommands,
 
     movement: {
-      animationDuration: 0.5,
+      animationDuration: 0.3,
       animationTime: 0,
       commandQueue: [],
       isMoving: false,

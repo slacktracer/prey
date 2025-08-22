@@ -8,7 +8,7 @@ import { makeRunLogicLoop } from "./loops/make-run-logic-loop.js";
 import { makeOrthographicCamera } from "./make-orthographic-camera.js";
 import { makeRenderer } from "./make-renderer.js";
 import { makeMovingThing } from "./moving-thing/make-moving-thing.js";
-import { orthographicCameraMovement } from "./orthographicCameraMovement.js";
+import { orthographicCameraMovement } from "./orthographic-camera-movement.js";
 import { settings } from "./settings.js";
 import type { Boot } from "./types/Boot.js";
 
