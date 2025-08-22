@@ -6,7 +6,8 @@ import type { OtherMovingThingRenderingSettings } from "./OtherMovingThingRender
 import { updateOtherMovingThing } from "./update-other-moving-thing.js";
 
 export const makeOtherMovingThing = (
-  { renderingSettings }: {
+  { position, renderingSettings }: {
+    position: { x: number; y: number; z: number };
     renderingSettings: OtherMovingThingRenderingSettings;
   },
 ): OtherMovingThing => {
@@ -28,11 +29,14 @@ export const makeOtherMovingThing = (
     },
 
     position: {
-      current: { x: 0, y: 0, z: 0 },
-      target: { x: 0, y: 0, z: 0 },
+      current: { ...position },
+      target: { ...position },
     },
 
-    rendering: makeOtherMovingThingRendering({ renderingSettings }),
+    rendering: makeOtherMovingThingRendering({
+      position,
+      renderingSettings,
+    }),
 
     renderingSettings,
 

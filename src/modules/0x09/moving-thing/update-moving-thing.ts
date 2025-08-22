@@ -12,7 +12,7 @@ export function updateMovingThing(
   },
 ) {
   if (!this.movement.isMoving) {
-    const command = commands.shift();
+    const [command] = commands;
 
     switch (command) {
       case this.commands.forward:

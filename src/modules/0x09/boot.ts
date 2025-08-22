@@ -44,8 +44,10 @@ export const boot: Boot = async ({ container }) => {
 
   const otherMovingThings = [];
 
-  for (let i = 0; i < 10; i += 1) {
+  for (let i = 0; i < 1; i += 1) {
     const otherMovingThing = makeOtherMovingThing({
+      position: { x: 0, y: 0, z: -3 },
+
       renderingSettings: {
         color: 0x242c8542,
         height: 3,
