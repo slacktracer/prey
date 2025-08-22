@@ -59,11 +59,11 @@ export function updateMovingThing(
 
     const easeOutProgress = 1 - Math.pow(1 - progress, 3);
 
-    this.rendering.position.x = this.position.current.x +
-      (this.position.target.x - this.position.current.x) * easeOutProgress;
+    this.rendering.position.x = 0.5 + (this.position.current.x +
+      (this.position.target.x - this.position.current.x) * easeOutProgress);
 
-    this.rendering.position.z = this.position.current.z +
-      (this.position.target.z - this.position.current.z) * easeOutProgress;
+    this.rendering.position.z = 0.5 + (this.position.current.z +
+      (this.position.target.z - this.position.current.z) * easeOutProgress);
 
     if (progress >= 1) {
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions

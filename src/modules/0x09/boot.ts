@@ -9,6 +9,7 @@ import { makeOrthographicCamera } from "./make-orthographic-camera.js";
 import { makeRenderer } from "./make-renderer.js";
 import { makeMovingThing } from "./moving-thing/make-moving-thing.js";
 import { orthographicCameraMovement } from "./orthographic-camera-movement.js";
+import { makeOtherMovingThing } from "./other-moving-thing/make-moving-thing.js";
 import { settings } from "./settings.js";
 import type { Boot } from "./types/Boot.js";
 
@@ -41,6 +42,17 @@ export const boot: Boot = async ({ container }) => {
   });
 
   scene.add(movingThing.rendering);
+
+  const otherMovingThing = makeOtherMovingThing({
+    renderingSettings: {
+      color: 0xf887c7,
+      depth: 1,
+      height: 2,
+      width: 1,
+    },
+  });
+
+  scene.add(otherMovingThing.rendering);
 
   startCollectingInput({ input });
 

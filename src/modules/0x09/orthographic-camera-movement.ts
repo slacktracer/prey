@@ -20,7 +20,7 @@ export const orthographicCameraMovement: OrthographicCameraMovement = {
     };
   },
 
-  speed: 1.0,
+  speed: 0.5,
 
   target: { x: 0, z: 0 },
 };
