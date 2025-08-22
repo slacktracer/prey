@@ -1,5 +1,5 @@
 import { movingThingCommands } from "../moving-thing/moving-thing-commands.js";
-import { otherMovingThingCommands } from "../other-moving-thing/other-moving-thing-commands";
+import { otherMovingThingCommands } from "../other-moving-thing/other-moving-thing-commands.js";
 import type { ParseInput } from "../types/ParseInput.js";
 
 export const parseInput: ParseInput = ({ input }) => {

@@ -3,7 +3,7 @@ import type { Settings } from "./types/Settings.js";
 export const settings: Settings = {
   ambientLightSettings: {
     color: 0xffffff,
-    intensity: 2,
+    intensity: 1,
     on: false,
   },
 

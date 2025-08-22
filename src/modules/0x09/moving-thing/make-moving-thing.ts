@@ -5,6 +5,8 @@ import type { MovingThing } from "./MovingThing.js";
 import type { MovingThingRenderingSettings } from "./MovingThingRenderingSettings.js";
 import { updateMovingThing } from "./update-moving-thing.js";
 
+let id = 0;
+
 export const makeMovingThing = (
   { renderingSettings }: {
     renderingSettings: MovingThingRenderingSettings;
@@ -12,6 +14,8 @@ export const makeMovingThing = (
 ): MovingThing => {
   const movingThing: MovingThing = {
     commands: movingThingCommands,
+
+    id: `MT_${id += 1}`,
 
     movement: {
       animationDuration: 0.3,

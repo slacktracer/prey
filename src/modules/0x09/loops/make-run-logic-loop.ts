@@ -32,7 +32,11 @@ export const makeRunLogicLoop: MakeRunLogicLoop = ({
     });
 
     otherMovingThings.forEach((otherMovingThing) => {
-      otherMovingThing.update({ commands, deltaTime: fixedTimeStep });
+      otherMovingThing.update({
+        commands,
+        deltaTime: fixedTimeStep,
+        otherMovingThings: otherMovingThings.concat([movingThing]),
+      });
     });
 
     numberOfSubstepsTaken += 1;

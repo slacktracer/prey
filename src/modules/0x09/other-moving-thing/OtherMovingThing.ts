@@ -6,6 +6,8 @@ import type { OtherMovingThingRenderingSettings } from "./OtherMovingThingRender
 export type OtherMovingThing = {
   commands: typeof otherMovingThingCommands;
 
+  id: string;
+
   movement: {
     animationDuration: number;
     animationTime: number;
@@ -23,5 +25,11 @@ export type OtherMovingThing = {
 
   renderingSettings: OtherMovingThingRenderingSettings;
 
-  update: (input: { commands: symbol[]; deltaTime: number }) => void;
+  update: (
+    input: {
+      commands: symbol[];
+      deltaTime: number;
+      otherMovingThings: OtherMovingThing[];
+    },
+  ) => void;
 };

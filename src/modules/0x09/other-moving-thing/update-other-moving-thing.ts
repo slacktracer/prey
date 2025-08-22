@@ -1,14 +1,30 @@
+import { getRandomInteger } from "../../common/get-random-integer.js";
+import { detectOverlap } from "../common/detect-overlap.js";
 import type { OtherMovingThing } from "./OtherMovingThing.js";
 
 export function updateOtherMovingThing(
   this: OtherMovingThing,
-  { commands, deltaTime }: {
+  { commands, deltaTime, otherMovingThings }: {
     commands: symbol[];
     deltaTime: number;
+    otherMovingThings: OtherMovingThing[];
   },
 ) {
+  const autopilot = true;
+
+  const otherMovingThingCommands = Object.values(this.commands);
+
+  const otherMovingThingCommand = otherMovingThingCommands[
+    getRandomInteger({ max: otherMovingThingCommands.length - 1, min: 0 })
+  ];
+
+  const randomCommand = Math.random() < 0.5
+    ? otherMovingThingCommand
+    : undefined;
+
   if (!this.movement.isMoving) {
-    const [command] = commands;
+    const [command] = autopilot && randomCommand ? [randomCommand] : commands;
+    // const [command] = commands;
 
     switch (command) {
       case this.commands.forward:
@@ -46,6 +62,15 @@ export function updateOtherMovingThing(
         this.movement.isMoving = true;
 
         break;
+    }
+
+    const willOverlap = detectOverlap({
+      thing: this,
+      thingList: otherMovingThings,
+    });
+
+    if (willOverlap === true) {
+      this.position.target = { ...this.position.current };
     }
   }
 

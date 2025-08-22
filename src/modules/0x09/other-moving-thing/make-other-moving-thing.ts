@@ -5,6 +5,8 @@ import type { OtherMovingThing } from "./OtherMovingThing.js";
 import type { OtherMovingThingRenderingSettings } from "./OtherMovingThingRenderingSettings.js";
 import { updateOtherMovingThing } from "./update-other-moving-thing.js";
 
+let id = 0;
+
 export const makeOtherMovingThing = (
   { position, renderingSettings }: {
     position: { x: number; y: number; z: number };
@@ -13,6 +15,8 @@ export const makeOtherMovingThing = (
 ): OtherMovingThing => {
   const otherMovingThing: OtherMovingThing = {
     commands: otherMovingThingCommands,
+
+    id: `OMT_${id += 1}`,
 
     movement: {
       animationDuration: 0.9,

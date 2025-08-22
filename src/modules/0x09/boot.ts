@@ -44,9 +44,15 @@ export const boot: Boot = async ({ container }) => {
 
   const otherMovingThings = [];
 
-  for (let i = 0; i < 1; i += 1) {
+  const otherMovingThingsCount = 10;
+
+  const startingI = 1;
+
+  for (let i = startingI; i < otherMovingThingsCount + startingI; i += 1) {
+    const { x, z } = getXZAround00(otherMovingThingsCount, i);
+
     const otherMovingThing = makeOtherMovingThing({
-      position: { x: 0, y: 0, z: -3 },
+      position: { x, y: 0, z },
 
       renderingSettings: {
         color: 0x242c8542,
@@ -93,3 +99,14 @@ export const boot: Boot = async ({ container }) => {
     scene.add(ambientLight);
   }
 };
+
+function getXZAround00(count: number, i: number) {
+  const angle = (i / count) * Math.PI * 2;
+
+  const radius = 4;
+
+  return {
+    x: Math.round(Math.cos(angle) * radius),
+    z: Math.round(Math.sin(angle) * radius),
+  };
+}

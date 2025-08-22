@@ -7,6 +7,8 @@ import type { MovingThingRenderingSettings } from "./MovingThingRenderingSetting
 export type MovingThing = {
   commands: typeof movingThingCommands;
 
+  id: string;
+
   movement: {
     animationDuration: number;
     animationTime: number;
