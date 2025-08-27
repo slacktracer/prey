@@ -4,6 +4,8 @@ import type { otherMovingThingCommands } from "./other-moving-thing-commands.js"
 import type { OtherMovingThingRenderingSettings } from "./OtherMovingThingRenderingSettings.js";
 
 export type OtherMovingThing = {
+  autopilot: boolean;
+
   commands: typeof otherMovingThingCommands;
 
   id: string;

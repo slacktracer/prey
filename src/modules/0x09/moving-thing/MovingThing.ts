@@ -5,6 +5,8 @@ import type { movingThingCommands } from "./moving-thing-commands.js";
 import type { MovingThingRenderingSettings } from "./MovingThingRenderingSettings.js";
 
 export type MovingThing = {
+  autopilot: false;
+
   commands: typeof movingThingCommands;
 
   id: string;

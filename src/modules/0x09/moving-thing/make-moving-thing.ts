@@ -13,6 +13,8 @@ export const makeMovingThing = (
   },
 ): MovingThing => {
   const movingThing: MovingThing = {
+    autopilot: false,
+
     commands: movingThingCommands,
 
     id: `MT_${id += 1}`,

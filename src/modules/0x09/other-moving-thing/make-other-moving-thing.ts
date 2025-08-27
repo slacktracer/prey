@@ -8,12 +8,15 @@ import { updateOtherMovingThing } from "./update-other-moving-thing.js";
 let id = 0;
 
 export const makeOtherMovingThing = (
-  { position, renderingSettings }: {
+  { autopilot, position, renderingSettings }: {
+    autopilot: boolean;
     position: { x: number; y: number; z: number };
     renderingSettings: OtherMovingThingRenderingSettings;
   },
 ): OtherMovingThing => {
   const otherMovingThing: OtherMovingThing = {
+    autopilot,
+
     commands: otherMovingThingCommands,
 
     id: `OMT_${id += 1}`,

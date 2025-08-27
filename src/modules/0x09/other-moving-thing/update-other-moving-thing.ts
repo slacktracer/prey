@@ -1,5 +1,5 @@
-import { getRandomInteger } from "../../common/get-random-integer.js";
 import { detectOverlap } from "../common/detect-overlap.js";
+import { getRandomCommand } from "../common/get-random-command";
 import type { OtherMovingThing } from "./OtherMovingThing.js";
 
 export function updateOtherMovingThing(
@@ -10,21 +10,16 @@ export function updateOtherMovingThing(
     otherMovingThings: OtherMovingThing[];
   },
 ) {
-  const autopilot = true;
+  const autopilotOn = this.autopilot === true;
 
-  const otherMovingThingCommands = Object.values(this.commands);
+  let randomCommand: symbol;
 
-  const otherMovingThingCommand = otherMovingThingCommands[
-    getRandomInteger({ max: otherMovingThingCommands.length - 1, min: 0 })
-  ];
-
-  const randomCommand = Math.random() < 0.5
-    ? otherMovingThingCommand
-    : undefined;
+  if (autopilotOn) {
+    randomCommand = getRandomCommand({ thing: this });
+  }
 
   if (!this.movement.isMoving) {
-    const [command] = autopilot && randomCommand ? [randomCommand] : commands;
-    // const [command] = commands;
+    const [command] = autopilotOn ? [randomCommand] : commands;
 
     switch (command) {
       case this.commands.forward:

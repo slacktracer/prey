@@ -52,6 +52,8 @@ export const boot: Boot = async ({ container }) => {
     const { x, z } = getXZAround00(otherMovingThingsCount, i);
 
     const otherMovingThing = makeOtherMovingThing({
+      autopilot: true,
+
       position: { x, y: 0, z },
 
       renderingSettings: {
