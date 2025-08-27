@@ -9,8 +9,8 @@ export const settings: Settings = {
 
   groundPlaneSettings: {
     color: 0x303030,
-    depth: 101,
-    width: 101,
+    depth: 7,
+    width: 7,
   },
 
   logicLoopSettings: {

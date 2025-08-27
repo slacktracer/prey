@@ -1,6 +1,7 @@
 import { AmbientLight, Clock, Scene } from "three";
 
 import { makeOrthographicCamera } from "./camera/make-orthographic-camera.js";
+import { makeGroundPlane } from "./ground/make-ground-plane.js";
 import { input } from "./input/input.js";
 import { startCollectingInput } from "./input/start-collecting-input.js";
 import { makeRenderer } from "./make-renderer.js";
@@ -23,6 +24,10 @@ export const boot: Boot = async ({ container }) => {
     });
 
   scene.add(orthographicCameraGroup);
+
+  const groundPlane = makeGroundPlane({ ...settings.groundPlaneSettings });
+
+  scene.add(groundPlane);
 
   const runLogicLoop = makeRunLogicLoop({
     ...settings.logicLoopSettings,
