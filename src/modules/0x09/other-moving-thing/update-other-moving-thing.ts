@@ -19,7 +19,7 @@ export function updateOtherMovingThing(
   }
 
   if (!this.movement.isMoving) {
-    const [command] = autopilotOn ? [randomCommand] : commands;
+    const [command] = autopilotOn ? [randomCommand!] : commands;
 
     switch (command) {
       case this.commands.forward:
