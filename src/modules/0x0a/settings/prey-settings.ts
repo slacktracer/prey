@@ -22,7 +22,7 @@ export const preySettings = {
       yOffset: 2,
     },
 
-    color: "whitesmoke",
+    color: 0x030303,
 
     depth: 1,
 
