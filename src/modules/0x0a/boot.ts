@@ -8,9 +8,11 @@ import { startCollectingInput } from "./input/start-collecting-input.js";
 import { makeRenderer } from "./make-renderer.js";
 import { makeRunAnimationLoop } from "./make-run-animation-loop.js";
 import { makeRunLogicLoop } from "./make-run-logic-loop.js";
+import { isMapValid } from "./maps/is-map-valid.js";
 import { makePrey } from "./prey/make-prey.js";
 import { settings } from "./settings/settings.js";
 import type { Boot } from "./types/Boot.js";
+import { addWallsToScene } from "./walls/add-walls-to-scene.js";
 
 const clock = new Clock();
 
@@ -31,13 +33,24 @@ export const boot: Boot = async ({ container }) => {
 
   scene.add(groundPlane);
 
-  const {
-    World,
-  } = await import(
-    "@dimforge/rapier3d"
-  );
+  const { map } = await import("./maps/basic-map.js");
+
+  const mapIsValid = isMapValid({ map });
+
+  if (mapIsValid === false) {
+    throw new Error("Invalid map");
+  }
+
+  const { World } = await import("@dimforge/rapier3d");
 
   const world = new World({ x: 0, y: 0, z: 0 });
+
+  await addWallsToScene({
+    ...settings.wallsSettings,
+    map,
+    scene,
+    world,
+  });
 
   const prey = await makePrey({ ...settings.preySettings, world });
 

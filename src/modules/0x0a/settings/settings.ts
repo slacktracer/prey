@@ -5,6 +5,7 @@ import { orbitControlsSettings } from "./orbit-controls-settings.js";
 import { orthographicCameraSettings } from "./orthographic-camera-settings.js";
 import { preySettings } from "./prey-settings.js";
 import type { Settings } from "./types/Settings.js";
+import { wallsSettings } from "./walls-settings.js";
 
 export const settings: Settings = {
   ambientLightSettings,
@@ -13,4 +14,5 @@ export const settings: Settings = {
   orbitControlsSettings,
   orthographicCameraSettings,
   preySettings,
+  wallsSettings,
 };
