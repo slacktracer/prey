@@ -1,4 +1,5 @@
 import { AmbientLight, Clock, Scene } from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 import { makeOrthographicCamera } from "./camera/make-orthographic-camera.js";
 import { makeGroundPlane } from "./ground/make-ground-plane.js";
@@ -78,5 +79,9 @@ export const boot: Boot = async ({ container }) => {
     );
 
     scene.add(ambientLight);
+  }
+
+  if (settings.orbitControlsSettings.on) {
+    new OrbitControls(orthographicCamera, renderer.domElement);
   }
 };
