@@ -30,7 +30,15 @@ export const boot: Boot = async ({ container }) => {
 
   scene.add(groundPlane);
 
-  const prey = makePrey(settings.preySettings);
+  const {
+    World,
+  } = await import(
+    "@dimforge/rapier3d"
+  );
+
+  const world = new World({ x: 0, y: 0, z: 0 });
+
+  const prey = await makePrey({ ...settings.preySettings, world });
 
   scene.add(prey.rendering);
 
