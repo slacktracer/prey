@@ -1,15 +1,17 @@
 import { parseInput } from "./input/parse-input.js";
+import { updatePrey } from "./prey/update-prey.js";
 import type { MakeRunLogicLoop } from "./types/MakeRunLogicLoop.js";
 
 export const makeRunLogicLoop: MakeRunLogicLoop = ({
   fixedTimeStep,
   input,
   maximumNumberOfSubsteps,
+  prey,
   time,
-  // world,
+  world,
 }) =>
 ({ deltaTime }) => {
-  /*const commands = */ parseInput({ input, preyCommands: { key: Symbol() } });
+  const commands = parseInput({ input, preyCommands: prey.commands });
 
   time.accumulator += deltaTime;
 
@@ -21,7 +23,9 @@ export const makeRunLogicLoop: MakeRunLogicLoop = ({
   ) {
     time.accumulator -= fixedTimeStep;
 
-    // world.step();
+    updatePrey({ commands, prey });
+
+    world.step();
 
     numberOfSubstepsTaken += 1;
   }

@@ -1,9 +1,10 @@
 import { makePreyPhysics } from "./make-prey-physics.js";
 import { makePreyRendering } from "./make-prey-rendering.js";
+import { preyCommands } from "./prey-commands.js";
 import type { MakePrey } from "./types/MakePrey.js";
 
 export const makePrey: MakePrey = async (
-  { position, renderingSettings, world },
+  { physicsSettings, position, renderingSettings, world },
 ) => {
   const rendering = makePreyRendering({ renderingSettings });
 
@@ -13,10 +14,17 @@ export const makePrey: MakePrey = async (
     position.current.z,
   );
 
-  const physics = await makePreyPhysics({ position, renderingSettings, world });
+  const physics = await makePreyPhysics({
+    physicsSettings,
+    position,
+    renderingSettings,
+    world,
+  });
 
   return {
+    commands: preyCommands,
     physics,
+    physicsSettings,
     position,
     rendering,
   };

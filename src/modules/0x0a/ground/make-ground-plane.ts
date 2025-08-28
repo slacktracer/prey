@@ -6,6 +6,8 @@ import type { MakeGroundPlane } from "./types/MakeGroundPlane.js";
 export const makeGroundPlane: MakeGroundPlane = ({
   color,
   depth,
+  graininess,
+  tileSide,
   width,
 }) => {
   const groundPlaneGeometry = new PlaneGeometry(width, depth);
@@ -13,6 +15,8 @@ export const makeGroundPlane: MakeGroundPlane = ({
   const groundPlaneTexture = makeGroundPlaneTexture({
     color,
     depth,
+    graininess,
+    tileSide,
     width,
   });
 

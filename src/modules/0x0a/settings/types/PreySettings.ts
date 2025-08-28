@@ -1,6 +1,6 @@
 import type { Prey } from "../../prey/types/Prey.js";
 
-export type PreySettings = Pick<Prey, "position"> & {
+export type PreySettings = Pick<Prey, "physicsSettings" | "position"> & {
   renderingSettings: {
     candle: {
       color: number | string;

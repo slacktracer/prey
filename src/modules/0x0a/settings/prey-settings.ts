@@ -1,4 +1,14 @@
 export const preySettings = {
+  physicsSettings: {
+    angularDamping: 2,
+
+    forceMultiplier: 50,
+
+    linearDamping: 1,
+
+    torque: 5,
+  },
+
   position: {
     current: { x: 1, y: 0, z: 1 },
 

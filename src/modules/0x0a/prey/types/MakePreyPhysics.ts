@@ -5,21 +5,18 @@ import type {
   World,
 } from "@dimforge/rapier3d";
 
-export type MakePreyPhysics = (input: {
-  position: {
-    current: {
-      x: number;
-      y: number;
-      z: number;
+import type { Prey } from "./Prey.js";
+
+export type MakePreyPhysics = (
+  input: Pick<Prey, "physicsSettings" | "position"> & {
+    renderingSettings: {
+      depth: number;
+      height: number;
+      width: number;
     };
-  };
-  renderingSettings: {
-    depth: number;
-    height: number;
-    width: number;
-  };
-  world: World;
-}) => Promise<{
+    world: World;
+  },
+) => Promise<{
   characterController: KinematicCharacterController;
   collider: Collider;
   rigidBody: RigidBody;

@@ -1,6 +1,7 @@
 import type { MakePreyPhysics } from "./types/MakePreyPhysics.js";
 
 export const makePreyPhysics: MakePreyPhysics = async ({
+  physicsSettings,
   position,
   renderingSettings,
   world,
@@ -15,6 +16,8 @@ export const makePreyPhysics: MakePreyPhysics = async ({
   );
 
   const rigidBodyDescriptor = RigidBodyDesc.dynamic()
+    .setAngularDamping(physicsSettings.angularDamping)
+    .setLinearDamping(physicsSettings.linearDamping)
     .setTranslation(position.current.x, position.current.y, position.current.z);
 
   const rigidBody = world.createRigidBody(rigidBodyDescriptor);

@@ -3,7 +3,7 @@ import { CanvasTexture, Color, RepeatWrapping } from "three";
 import type { MakeGroundPlaneTexture } from "./types/MakeGroundPlaneTexture.js";
 
 export const makeGroundPlaneTexture: MakeGroundPlaneTexture = (
-  { color, depth, width },
+  { color, depth, graininess, tileSide, width },
 ) => {
   const canvas = document.createElement("canvas");
 
@@ -30,7 +30,7 @@ export const makeGroundPlaneTexture: MakeGroundPlaneTexture = (
   const data = imageData.data;
 
   for (let i = 0; i < data.length; i += 4) {
-    const noise = (Math.random() - 0.5) * 2;
+    const noise = (Math.random() - 0.5) * graininess;
 
     data[i] = Math.max(0, Math.min(255, red + noise)); // red
 
@@ -42,6 +42,32 @@ export const makeGroundPlaneTexture: MakeGroundPlaneTexture = (
   }
 
   context.putImageData(imageData, 0, 0);
+
+  if (tileSide > 0) {
+    context.lineWidth = 1;
+
+    context.strokeStyle = "rgba(0, 0, 0, 0.2)";
+
+    for (let x = 0; x <= 64; x += tileSide) {
+      context.beginPath();
+
+      context.moveTo(x, 0);
+
+      context.lineTo(x, 64);
+
+      context.stroke();
+    }
+
+    for (let y = 0; y <= 64; y += tileSide) {
+      context.beginPath();
+
+      context.moveTo(0, y);
+
+      context.lineTo(64, y);
+
+      context.stroke();
+    }
+  }
 
   const texture = new CanvasTexture(canvas);
 

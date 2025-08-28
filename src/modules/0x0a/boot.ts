@@ -45,11 +45,14 @@ export const boot: Boot = async ({ container }) => {
   const runLogicLoop = makeRunLogicLoop({
     ...settings.logicLoopSettings,
     input,
+    prey,
+    world,
   });
 
   const runAnimationLoop = makeRunAnimationLoop({
     orthographicCamera,
     orthographicCameraGroup,
+    prey,
     renderer,
     scene,
   });
