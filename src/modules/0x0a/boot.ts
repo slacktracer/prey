@@ -7,6 +7,7 @@ import { startCollectingInput } from "./input/start-collecting-input.js";
 import { makeRenderer } from "./make-renderer.js";
 import { makeRunAnimationLoop } from "./make-run-animation-loop.js";
 import { makeRunLogicLoop } from "./make-run-logic-loop.js";
+import { makePrey } from "./prey/make-prey.js";
 import { settings } from "./settings/settings.js";
 import type { Boot } from "./types/Boot.js";
 
@@ -28,6 +29,10 @@ export const boot: Boot = async ({ container }) => {
   const groundPlane = makeGroundPlane({ ...settings.groundPlaneSettings });
 
   scene.add(groundPlane);
+
+  const prey = makePrey(settings.preySettings);
+
+  scene.add(prey.rendering);
 
   const runLogicLoop = makeRunLogicLoop({
     ...settings.logicLoopSettings,
