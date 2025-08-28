@@ -16,6 +16,8 @@ export const makePreyPhysics: MakePreyPhysics = async ({
   );
 
   const rigidBodyDescriptor = RigidBodyDesc.dynamic()
+    .enabledRotations(false, true, false)
+    .enabledTranslations(true, false, true)
     .setAngularDamping(physicsSettings.angularDamping)
     .setLinearDamping(physicsSettings.linearDamping)
     .setTranslation(position.current.x, position.current.y, position.current.z);

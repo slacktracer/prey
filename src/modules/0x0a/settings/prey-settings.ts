@@ -1,12 +1,12 @@
 export const preySettings = {
   physicsSettings: {
-    angularDamping: 2,
+    angularDamping: 4,
 
-    forceMultiplier: 50,
+    forceMultiplier: 30,
 
-    linearDamping: 1,
+    linearDamping: 2,
 
-    torque: 5,
+    torque: 6,
   },
 
   position: {
