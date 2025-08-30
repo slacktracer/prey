@@ -2,7 +2,9 @@ export const preySettings = {
   physicsSettings: {
     angularDamping: 4,
 
-    forceMultiplier: 30,
+    backwardForceMultiplier: 10,
+
+    forwardForceMultiplier: 30,
 
     linearDamping: 2,
 
@@ -18,6 +20,12 @@ export const preySettings = {
   renderingSettings: {
     candle: {
       color: 0xffffff,
+
+      decay: 2,
+
+      distance: 8,
+
+      intensity: 40,
 
       yOffset: 2,
     },

@@ -5,6 +5,12 @@ export type PreySettings = Pick<Prey, "physicsSettings" | "position"> & {
     candle: {
       color: number | string;
 
+      decay: number;
+
+      distance: number;
+
+      intensity: number;
+
       yOffset: number;
     };
 

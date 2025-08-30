@@ -7,11 +7,8 @@ export type AddWallsToScene = (input: {
   material: {
     color: number;
     flatShading: boolean;
-    opacity: number;
     shininess: number;
     specular: number;
-    transparent: boolean;
-    wireframe: boolean;
   };
   scene: Scene;
   world: World;

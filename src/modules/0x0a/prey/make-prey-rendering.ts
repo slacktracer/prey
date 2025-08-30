@@ -46,7 +46,12 @@ export const makePreyRendering: MakePreyRendering = ({ renderingSettings }) => {
 
   rendering.add(preyBody);
 
-  const candle = new PointLight(renderingSettings.candle.color, 40, 8);
+  const candle = new PointLight(
+    renderingSettings.candle.color,
+    renderingSettings.candle.intensity,
+    renderingSettings.candle.distance,
+    renderingSettings.candle.decay,
+  );
 
   candle.position.set(
     0,

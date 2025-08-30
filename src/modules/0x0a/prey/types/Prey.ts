@@ -16,7 +16,8 @@ export type Prey = {
   };
   physicsSettings: {
     angularDamping: number;
-    forceMultiplier: number;
+    backwardForceMultiplier: number;
+    forwardForceMultiplier: number;
     linearDamping: number;
     torque: number;
   };

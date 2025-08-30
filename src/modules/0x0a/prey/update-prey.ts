@@ -33,7 +33,7 @@ export const updatePrey: UpdatePrey = ({ commands, prey }) => {
     });
 
     const force = multiplyVector({
-      scalar: prey.physicsSettings.forceMultiplier,
+      scalar: prey.physicsSettings.forwardForceMultiplier,
       vector: forward,
     });
 
@@ -50,7 +50,7 @@ export const updatePrey: UpdatePrey = ({ commands, prey }) => {
     });
 
     const force = multiplyVector({
-      scalar: prey.physicsSettings.forceMultiplier / 10,
+      scalar: prey.physicsSettings.backwardForceMultiplier,
       vector: backward,
     });
 
