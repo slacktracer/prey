@@ -6,9 +6,11 @@ import type {
 import type { Group } from "three";
 
 import type { preyCommands } from "../prey-commands.js";
+import type { MakePreyGhostTrail } from "./MakePreyGhostTrail.js";
 
 export type Prey = {
   commands: typeof preyCommands;
+  ghostTrail: ReturnType<MakePreyGhostTrail>;
   physics: {
     characterController: KinematicCharacterController;
     collider: Collider;

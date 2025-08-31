@@ -18,5 +18,14 @@ export const makeRunAnimationLoop: MakeRunAnimationLoop = ({
     orthographicCameraGroup,
   });
 
+  prey.ghostTrail.checkAndCreateGhost(
+    prey.rendering.position,
+    prey.rendering.rotation,
+    scene,
+    7.5,
+  );
+
+  prey.ghostTrail.updateGhostCopies();
+
   renderer.render(scene, orthographicCamera);
 };

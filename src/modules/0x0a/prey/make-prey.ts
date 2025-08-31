@@ -1,3 +1,4 @@
+import { makePreyGhostTrail } from "./make-prey-ghost-trail.js";
 import { makePreyPhysics } from "./make-prey-physics.js";
 import { makePreyRendering } from "./make-prey-rendering.js";
 import { preyCommands } from "./prey-commands.js";
@@ -21,8 +22,11 @@ export const makePrey: MakePrey = async (
     world,
   });
 
+  const ghostTrail = makePreyGhostTrail({ renderingSettings });
+
   return {
     commands: preyCommands,
+    ghostTrail,
     physics,
     physicsSettings,
     position,
