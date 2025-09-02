@@ -4,7 +4,7 @@ import { preyCommands } from "./prey-commands.js";
 import type { MakePrey } from "./types/MakePrey.js";
 
 export const makePrey: MakePrey = async (
-  { physicsSettings, position, renderingSettings, world },
+  { characterController, physicsSettings, position, renderingSettings, world },
 ) => {
   const rendering = makePreyRendering({ renderingSettings });
 
@@ -22,6 +22,7 @@ export const makePrey: MakePrey = async (
   });
 
   return {
+    characterController,
     commands: preyCommands,
     physics,
     physicsSettings,

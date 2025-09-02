@@ -1,4 +1,26 @@
 export const preySettings = {
+  characterController: {
+    forward: ["x", 1] as const,
+
+    on: true,
+
+    rotating: false,
+
+    rotation: {
+      current: { y: 0 },
+
+      target: { y: 0 },
+
+      timeElapsed: 0,
+
+      timeToComplete: 0.5,
+    },
+
+    speed: 5,
+
+    velocity: { x: 0, z: 0 },
+  },
+
   physicsSettings: {
     angularDamping: 4,
 

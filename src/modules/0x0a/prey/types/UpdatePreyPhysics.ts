@@ -1,5 +1,5 @@
 import type { Prey } from "./Prey.js";
 
-export type UpdatePrey = (
+export type UpdatePreyPhysics = (
   input: { commands: symbol[]; deltaTime: number; prey: Prey },
 ) => void;

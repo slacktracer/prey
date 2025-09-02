@@ -8,6 +8,19 @@ import type { Group } from "three";
 import type { preyCommands } from "../prey-commands.js";
 
 export type Prey = {
+  characterController: {
+    forward: readonly ["x" | "z", -1 | 1];
+    on: boolean;
+    rotating: boolean;
+    rotation: {
+      current: { y: number };
+      target: { y: number };
+      timeElapsed: number;
+      timeToComplete: number;
+    };
+    speed: number;
+    velocity: { x: number; z: number };
+  };
   commands: typeof preyCommands;
   physics: {
     characterController: KinematicCharacterController;
