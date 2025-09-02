@@ -15,7 +15,7 @@ export const preySettings = {
 
       timeElapsed: 0,
 
-      timeToComplete: 0.5,
+      timeToComplete: 0.2,
     },
 
     speed: 5,
