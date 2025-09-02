@@ -3,7 +3,7 @@ import type {
   KinematicCharacterController,
   RigidBody,
 } from "@dimforge/rapier3d";
-import type { Group } from "three";
+import type { Group, Quaternion } from "three";
 
 import type { preyCommands } from "../prey-commands.js";
 
@@ -14,7 +14,7 @@ export type Prey = {
     rotating: boolean;
     rotation: {
       current: { y: number };
-      target: { y: number };
+      target: { y: number; quaternion: Quaternion };
       timeElapsed: number;
       timeToComplete: number;
     };

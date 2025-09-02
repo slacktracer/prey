@@ -1,7 +1,30 @@
-import { MathUtils } from "three";
+import type { RigidBody } from "@dimforge/rapier3d";
+import { Quaternion } from "three";
 
 import { getForward } from "../../../../common/get-forward.js";
 import type { UpdatePreyPhysics } from "../../types/UpdatePreyPhysics.js";
+
+const getCurrentQuaternion = (rigidBody: RigidBody): Quaternion => {
+  const currentRotation = rigidBody.rotation();
+
+  return new Quaternion(
+    currentRotation.x,
+    currentRotation.y,
+    currentRotation.z,
+    currentRotation.w,
+  );
+};
+
+const getRotatedQuaternion = (
+  rigidBody: RigidBody,
+  angleY: number,
+): Quaternion => {
+  const currentQuaternion = getCurrentQuaternion(rigidBody);
+
+  return currentQuaternion.multiply(
+    new Quaternion().setFromAxisAngle({ x: 0, y: 1, z: 0 }, angleY),
+  );
+};
 
 export const updatePreyPhysics: UpdatePreyPhysics = (
   { commands, deltaTime, prey },
@@ -12,14 +35,11 @@ export const updatePreyPhysics: UpdatePreyPhysics = (
 
       prey.characterController.rotation.timeElapsed = 0;
 
-      const rotationQuaternion = prey.physics.rigidBody.rotation();
-
-      const yRotation = Math.atan2(
-        2 * (rotationQuaternion.w * rotationQuaternion.y),
-        1 - 2 * (rotationQuaternion.y * rotationQuaternion.y),
-      );
-
-      prey.characterController.rotation.target.y = yRotation + Math.PI;
+      prey.characterController.rotation.target.quaternion =
+        getRotatedQuaternion(
+          prey.physics.rigidBody,
+          Math.PI,
+        );
     }
 
     if (commands.includes(prey.commands.left)) {
@@ -27,14 +47,11 @@ export const updatePreyPhysics: UpdatePreyPhysics = (
 
       prey.characterController.rotation.timeElapsed = 0;
 
-      const rotationQuaternion = prey.physics.rigidBody.rotation();
-
-      const yRotation = Math.atan2(
-        2 * (rotationQuaternion.w * rotationQuaternion.y),
-        1 - 2 * (rotationQuaternion.y * rotationQuaternion.y),
-      );
-
-      prey.characterController.rotation.target.y = yRotation + Math.PI / 2;
+      prey.characterController.rotation.target.quaternion =
+        getRotatedQuaternion(
+          prey.physics.rigidBody,
+          Math.PI / 2,
+        );
     }
 
     if (commands.includes(prey.commands.right)) {
@@ -42,18 +59,15 @@ export const updatePreyPhysics: UpdatePreyPhysics = (
 
       prey.characterController.rotation.timeElapsed = 0;
 
-      const rotationQuaternion = prey.physics.rigidBody.rotation();
-
-      const yRotation = Math.atan2(
-        2 * (rotationQuaternion.w * rotationQuaternion.y),
-        1 - 2 * (rotationQuaternion.y * rotationQuaternion.y),
-      );
-
-      prey.characterController.rotation.target.y = yRotation - Math.PI / 2;
+      prey.characterController.rotation.target.quaternion =
+        getRotatedQuaternion(
+          prey.physics.rigidBody,
+          -Math.PI / 2,
+        );
     }
   }
 
-  if (prey.characterController.rotating) {
+  if (prey.characterController.rotating === true) {
     prey.characterController.rotation.timeElapsed += deltaTime;
 
     const rotatingProgress = Math.min(
@@ -62,31 +76,33 @@ export const updatePreyPhysics: UpdatePreyPhysics = (
         prey.characterController.rotation.timeToComplete,
     );
 
-    const interpolatedRotation = MathUtils.lerp(
-      prey.characterController.rotation.current.y,
-      prey.characterController.rotation.target.y,
+    const currentQuaternion = getCurrentQuaternion(prey.physics.rigidBody);
+
+    const interpolatedQuaternion = currentQuaternion.slerp(
+      prey.characterController.rotation.target.quaternion,
       rotatingProgress,
     );
 
-    // because quaternion
-    const halfYRotation = interpolatedRotation * 0.5;
-
     prey.physics.rigidBody.setRotation({
-      x: 0,
-      y: Math.sin(halfYRotation),
-      z: 0,
-      w: Math.cos(halfYRotation),
+      x: interpolatedQuaternion.x,
+      y: interpolatedQuaternion.y,
+      z: interpolatedQuaternion.z,
+      w: interpolatedQuaternion.w,
     }, true);
+
+    const currentYRotation = Math.atan2(
+      2 * (interpolatedQuaternion.w * interpolatedQuaternion.y),
+      1 - 2 * (interpolatedQuaternion.y * interpolatedQuaternion.y),
+    );
+
+    prey.characterController.rotation.current.y = currentYRotation;
+
+    prey.characterController.forward = getForward({
+      rotation: currentYRotation,
+    });
 
     if (rotatingProgress >= 1) {
       prey.characterController.rotating = false;
-
-      prey.characterController.rotation.current.y =
-        prey.characterController.rotation.target.y;
-
-      prey.characterController.forward = getForward({
-        rotation: prey.characterController.rotation.current.y,
-      });
     }
   }
 
