@@ -95,14 +95,14 @@ export const updatePreyPhysics: UpdatePreyPhysics = (
       1 - 2 * (interpolatedQuaternion.y * interpolatedQuaternion.y),
     );
 
-    prey.characterController.rotation.current.y = currentYRotation;
-
-    prey.characterController.forward = getForward({
-      rotation: currentYRotation,
-    });
-
     if (rotatingProgress >= 1) {
       prey.characterController.rotating = false;
+
+      prey.characterController.rotation.current.y = currentYRotation;
+
+      prey.characterController.forward = getForward({
+        rotation: currentYRotation,
+      });
     }
   }
 
