@@ -14,6 +14,7 @@ export const updatePreyRenderingPosition: UpdatePreyRenderingPosition = (
 
   prey.rendering.position.z = preyRenderingPosition.z;
 
-  // And rotation! When to change this function name?
-  prey.rendering.quaternion.copy(prey.physics.rigidBody.rotation());
+  if (prey.characterController.on === false) {
+    prey.rendering.quaternion.copy(prey.physics.rigidBody.rotation());
+  }
 };
