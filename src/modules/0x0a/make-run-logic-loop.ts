@@ -23,7 +23,7 @@ export const makeRunLogicLoop: MakeRunLogicLoop = ({
   ) {
     time.accumulator -= fixedTimeStep;
 
-    updatePrey({ commands, deltaTime, prey });
+    updatePrey({ commands, deltaTime: fixedTimeStep, prey });
 
     world.step();
 

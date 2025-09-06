@@ -2,7 +2,7 @@ export const preySettings = {
   characterController: {
     forward: ["x", 1] as const,
 
-    on: false,
+    on: true,
 
     rotating: false,
 

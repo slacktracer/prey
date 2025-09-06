@@ -45,6 +45,8 @@ export const boot: Boot = async ({ container }) => {
 
   const world = new World({ x: 0, y: 0, z: 0 });
 
+  world.timestep = settings.logicLoopSettings.fixedTimeStep;
+
   await addWallsToScene({
     ...settings.wallsSettings,
     map,

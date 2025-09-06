@@ -1,7 +1,7 @@
 import type { LogicLoopSettings } from "./types/LogicLoopSettings.js";
 
 export const logicLoopSettings: LogicLoopSettings = {
-  fixedTimeStep: 1 / 60,
+  fixedTimeStep: 1 / 30,
 
   maximumNumberOfSubsteps: 5,
 
