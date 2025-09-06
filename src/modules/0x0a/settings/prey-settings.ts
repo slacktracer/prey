@@ -1,17 +1,15 @@
-import { Quaternion } from "three";
-
 export const preySettings = {
   characterController: {
     forward: ["x", 1] as const,
 
-    on: true,
+    on: false,
 
     rotating: false,
 
     rotation: {
       current: { y: 0 },
 
-      target: { y: 0, quaternion: new Quaternion() },
+      target: { y: 0 },
 
       timeElapsed: 0,
 
