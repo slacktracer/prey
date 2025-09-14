@@ -5,12 +5,15 @@ import type { MakeRunAnimationLoop } from "./types/MakeRunAnimationLoop.js";
 export const makeRunAnimationLoop: MakeRunAnimationLoop = ({
   orthographicCamera,
   orthographicCameraGroup,
+  other,
   prey,
   renderer,
   scene,
 }) =>
 ({ interpolationFactor }) => {
   updatePreyRenderingPosition({ interpolationFactor, prey });
+
+  updatePreyRenderingPosition({ interpolationFactor, prey: other });
 
   updateOrthographicCameraGroupPosition({
     following: prey,

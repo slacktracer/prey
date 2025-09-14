@@ -58,9 +58,14 @@ export const boot: Boot = async ({ container }) => {
 
   scene.add(prey.rendering);
 
+  const other = await makePrey({ ...settings.otherSettings, world });
+
+  scene.add(other.rendering);
+
   const runLogicLoop = makeRunLogicLoop({
     ...settings.logicLoopSettings,
     input,
+    other,
     prey,
     world,
   });
@@ -68,6 +73,7 @@ export const boot: Boot = async ({ container }) => {
   const runAnimationLoop = makeRunAnimationLoop({
     orthographicCamera,
     orthographicCameraGroup,
+    other,
     prey,
     renderer,
     scene,

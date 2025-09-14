@@ -12,6 +12,7 @@ export type Settings = {
   logicLoopSettings: LogicLoopSettings;
   orbitControlsSettings: OrbitControlsSettings;
   orthographicCameraSettings: OrthographicCameraSettings;
+  otherSettings: PreySettings;
   preySettings: PreySettings;
   wallsSettings: WallsSettings;
 };

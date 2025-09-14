@@ -6,6 +6,7 @@ export const makeRunLogicLoop: MakeRunLogicLoop = ({
   fixedTimeStep,
   input,
   maximumNumberOfSubsteps,
+  other,
   prey,
   time,
   world,
@@ -24,6 +25,8 @@ export const makeRunLogicLoop: MakeRunLogicLoop = ({
     time.accumulator -= fixedTimeStep;
 
     updatePrey({ commands, deltaTime: fixedTimeStep, prey });
+
+    updatePrey({ commands: [], deltaTime: fixedTimeStep, prey: other });
 
     world.step();
 
