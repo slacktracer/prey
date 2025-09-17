@@ -3,6 +3,8 @@ import { updatePreyRenderingPosition } from "./prey/update-prey-rendering-positi
 import type { MakeRunAnimationLoop } from "./types/MakeRunAnimationLoop.js";
 
 export const makeRunAnimationLoop: MakeRunAnimationLoop = ({
+  channel,
+  isOther,
   orthographicCamera,
   orthographicCameraGroup,
   other,
@@ -13,6 +15,17 @@ export const makeRunAnimationLoop: MakeRunAnimationLoop = ({
 ({ interpolationFactor }) => {
   if (prey) {
     updatePreyRenderingPosition({ interpolationFactor, prey });
+
+    if (!isOther) {
+      channel.emit("chat message", {
+        type: "prey-move",
+        position: {
+          x: prey.rendering.position.x,
+          y: prey.rendering.position.y,
+          z: prey.rendering.position.z,
+        },
+      });
+    }
   }
 
   if (other) {

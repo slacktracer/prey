@@ -74,7 +74,11 @@ export const boot: Boot = async ({ container, isOther }) => {
     world,
   });
 
+  const channel = await makeChannel();
+
   const runAnimationLoop = makeRunAnimationLoop({
+    channel,
+    isOther,
     orthographicCamera,
     orthographicCameraGroup,
     other,
@@ -126,8 +130,6 @@ export const boot: Boot = async ({ container, isOther }) => {
     }
   };
 
-  const channel = await makeChannel();
-
   channel.emit("chat message", { id: Math.random() });
 
   if (isOther) {
@@ -135,6 +137,16 @@ export const boot: Boot = async ({ container, isOther }) => {
   }
 
   channel.on("chat message", async (data) => {
-    setUpOther(data);
+    if (data.type === "prey-move" && isOther) {
+      console.log(data.position);
+
+      if (prey && data.position) {
+        prey.position.current.x = data.position.x;
+        prey.position.current.y = data.position.y;
+        prey.position.current.z = data.position.z;
+      }
+    } else {
+      setUpOther(data);
+    }
   });
 };
