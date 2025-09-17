@@ -11,6 +11,7 @@ import { makeRunAnimationLoop } from "./make-run-animation-loop.js";
 import { makeRunLogicLoop } from "./make-run-logic-loop.js";
 import { isMapValid } from "./maps/is-map-valid.js";
 import { makePrey } from "./prey/make-prey.js";
+import type { Prey } from "./prey/types/Prey";
 import { settings } from "./settings/settings.js";
 import type { Boot } from "./types/Boot.js";
 import { addWallsToScene } from "./walls/add-walls-to-scene.js";
@@ -63,12 +64,12 @@ export const boot: Boot = async ({ container, isOther }) => {
     scene.add(prey.rendering);
   }
 
-  let other;
+  let other: Prey;
 
   const runLogicLoop = makeRunLogicLoop({
     ...settings.logicLoopSettings,
     input,
-    other,
+    otherControlled: isOther,
     prey,
     world,
   });
@@ -83,7 +84,7 @@ export const boot: Boot = async ({ container, isOther }) => {
   });
 
   renderer.setAnimationLoop(() => {
-    runLogicLoop({ deltaTime: clock.getDelta() });
+    runLogicLoop({ deltaTime: clock.getDelta(), other });
 
     const excessTime = settings.logicLoopSettings.time.accumulator;
 

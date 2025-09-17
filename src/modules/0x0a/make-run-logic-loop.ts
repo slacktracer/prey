@@ -6,13 +6,18 @@ export const makeRunLogicLoop: MakeRunLogicLoop = ({
   fixedTimeStep,
   input,
   maximumNumberOfSubsteps,
-  other,
+  otherControlled,
   prey,
   time,
   world,
 }) =>
-({ deltaTime }) => {
-  const commands = parseInput({ input, preyCommands: prey?.commands || [] });
+({ deltaTime, other }) => {
+  const commands = parseInput({
+    input,
+    preyCommands: otherControlled
+      ? (other?.commands || {})
+      : (prey?.commands || {}),
+  });
 
   time.accumulator += deltaTime;
 
@@ -25,11 +30,19 @@ export const makeRunLogicLoop: MakeRunLogicLoop = ({
     time.accumulator -= fixedTimeStep;
 
     if (prey) {
-      updatePrey({ commands, deltaTime: fixedTimeStep, prey });
+      updatePrey({
+        commands: otherControlled ? [] : commands,
+        deltaTime: fixedTimeStep,
+        prey,
+      });
     }
 
     if (other) {
-      updatePrey({ commands: [], deltaTime: fixedTimeStep, prey: other });
+      updatePrey({
+        commands: otherControlled ? commands : [],
+        deltaTime: fixedTimeStep,
+        prey: other,
+      });
     }
 
     world.step();
