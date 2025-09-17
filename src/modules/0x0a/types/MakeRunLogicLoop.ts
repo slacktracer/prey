@@ -7,8 +7,8 @@ export type MakeRunLogicLoop = (input: {
   fixedTimeStep: number;
   input: Input;
   maximumNumberOfSubsteps: number;
-  other: Prey;
-  prey: Prey;
+  other?: Prey;
+  prey?: Prey;
   time: { accumulator: number };
   world: World;
 }) => (input: { deltaTime: number }) => void;

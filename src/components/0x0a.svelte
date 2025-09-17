@@ -1,12 +1,18 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
+  import { page } from "$app/state";
+
   import { boot } from "../modules/0x0a/boot.js";
 
   let container: HTMLDivElement;
 
+  const queryParams = $derived(page.url.searchParams);
+
   onMount(() => {
-    boot({ container });
+    const isOther = Boolean(Number(queryParams.get("other")));
+
+    boot({ container, isOther });
   });
 </script>
 

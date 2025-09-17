@@ -11,15 +11,21 @@ export const makeRunAnimationLoop: MakeRunAnimationLoop = ({
   scene,
 }) =>
 ({ interpolationFactor }) => {
-  updatePreyRenderingPosition({ interpolationFactor, prey });
+  if (prey) {
+    updatePreyRenderingPosition({ interpolationFactor, prey });
+  }
 
-  updatePreyRenderingPosition({ interpolationFactor, prey: other });
+  if (other) {
+    updatePreyRenderingPosition({ interpolationFactor, prey: other });
+  }
 
-  updateOrthographicCameraGroupPosition({
-    following: prey,
-    interpolationFactor: 0.1,
-    orthographicCameraGroup,
-  });
+  if (prey) {
+    updateOrthographicCameraGroupPosition({
+      following: prey,
+      interpolationFactor: 0.1,
+      orthographicCameraGroup,
+    });
+  }
 
   renderer.render(scene, orthographicCamera);
 };

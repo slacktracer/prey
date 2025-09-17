@@ -2,6 +2,7 @@ import { AmbientLight, Clock, Scene } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 import { makeOrthographicCamera } from "./camera/make-orthographic-camera.js";
+import { makeChannel } from "./channel/channel";
 import { makeGroundPlane } from "./ground/make-ground-plane.js";
 import { input } from "./input/input.js";
 import { startCollectingInput } from "./input/start-collecting-input.js";
@@ -16,7 +17,7 @@ import { addWallsToScene } from "./walls/add-walls-to-scene.js";
 
 const clock = new Clock();
 
-export const boot: Boot = async ({ container }) => {
+export const boot: Boot = async ({ container, isOther }) => {
   const renderer = makeRenderer({ container });
 
   const scene = new Scene();
@@ -54,13 +55,15 @@ export const boot: Boot = async ({ container }) => {
     world,
   });
 
-  const prey = await makePrey({ ...settings.preySettings, world });
+  let prey;
 
-  scene.add(prey.rendering);
+  if (!isOther) {
+    prey = await makePrey({ ...settings.preySettings, world });
 
-  const other = await makePrey({ ...settings.otherSettings, world });
+    scene.add(prey.rendering);
+  }
 
-  scene.add(other.rendering);
+  let other;
 
   const runLogicLoop = makeRunLogicLoop({
     ...settings.logicLoopSettings,
@@ -105,4 +108,24 @@ export const boot: Boot = async ({ container }) => {
   if (settings.orbitControlsSettings.on) {
     new OrbitControls(orthographicCamera, renderer.domElement);
   }
+
+  const setUpOther = async ({ type }) => {
+    if (type === "enter-other") {
+      other = await makePrey({ ...settings.otherSettings, world });
+
+      scene.add(other.rendering);
+    }
+  };
+
+  const channel = await makeChannel();
+
+  channel.emit("chat message", { id: Math.random() });
+
+  if (isOther) {
+    channel.emit("chat message", { type: "enter-other" });
+  }
+
+  channel.on("chat message", async (data) => {
+    setUpOther(data);
+  });
 };

@@ -1,1 +1,3 @@
-export type Boot = (input: { container: HTMLDivElement }) => Promise<void>;
+export type Boot = (
+  input: { container: HTMLDivElement; isOther?: boolean },
+) => Promise<void>;
