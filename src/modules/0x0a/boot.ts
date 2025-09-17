@@ -115,6 +115,14 @@ export const boot: Boot = async ({ container, isOther }) => {
       other = await makePrey({ ...settings.otherSettings, world });
 
       scene.add(other.rendering);
+
+      channel.emit("chat message", { type: "enter-prey" });
+    }
+
+    if (type === "enter-prey" && isOther) {
+      prey = await makePrey({ ...settings.preySettings, world });
+
+      scene.add(prey.rendering);
     }
   };
 
