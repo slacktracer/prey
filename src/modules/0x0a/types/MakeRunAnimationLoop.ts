@@ -12,4 +12,4 @@ export type MakeRunAnimationLoop = (input: {
   prey?: Prey;
   renderer: WebGLRenderer;
   scene: Scene;
-}) => (input: { interpolationFactor: number }) => void;
+}) => (input: { interpolationFactor: number; prey?: Prey }) => void;

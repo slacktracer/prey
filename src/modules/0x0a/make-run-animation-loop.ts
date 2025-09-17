@@ -8,37 +8,44 @@ export const makeRunAnimationLoop: MakeRunAnimationLoop = ({
   orthographicCamera,
   orthographicCameraGroup,
   other,
-  prey,
   renderer,
   scene,
-}) =>
-({ interpolationFactor }) => {
-  if (prey) {
-    updatePreyRenderingPosition({ interpolationFactor, prey });
+}) => {
+  // let frameCount = 0;
 
-    if (!isOther) {
-      channel.emit("chat message", {
-        type: "prey-move",
-        position: {
+  return ({ interpolationFactor, prey }) => {
+    if (prey) {
+      updatePreyRenderingPosition({ interpolationFactor, prey: prey });
+
+      if (!isOther) {
+        // frameCount++;
+        // if (frameCount % 10 === 0) {
+        const position = {
           x: prey.rendering.position.x,
           y: prey.rendering.position.y,
           z: prey.rendering.position.z,
-        },
+        };
+        // console.log("Sending prey-move:", position);
+        channel.emit("chat message", {
+          type: "prey-move",
+          position,
+        });
+        // }
+      }
+    }
+
+    if (other) {
+      updatePreyRenderingPosition({ interpolationFactor, prey: other });
+    }
+
+    if (prey) {
+      updateOrthographicCameraGroupPosition({
+        following: prey,
+        interpolationFactor: 0.1,
+        orthographicCameraGroup,
       });
     }
-  }
 
-  if (other) {
-    updatePreyRenderingPosition({ interpolationFactor, prey: other });
-  }
-
-  if (prey) {
-    updateOrthographicCameraGroupPosition({
-      following: prey,
-      interpolationFactor: 0.1,
-      orthographicCameraGroup,
-    });
-  }
-
-  renderer.render(scene, orthographicCamera);
+    renderer.render(scene, orthographicCamera);
+  };
 };

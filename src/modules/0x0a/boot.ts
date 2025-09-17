@@ -57,9 +57,11 @@ export const boot: Boot = async ({ container, isOther }) => {
   });
 
   let prey;
+  let preyCreated = false;
 
   if (!isOther) {
     prey = await makePrey({ ...settings.preySettings, world });
+    preyCreated = true;
 
     scene.add(prey.rendering);
   }
@@ -96,7 +98,7 @@ export const boot: Boot = async ({ container, isOther }) => {
 
     const interpolationFactor = excessTime / fixedTimeStep;
 
-    runAnimationLoop({ interpolationFactor });
+    runAnimationLoop({ interpolationFactor, prey });
   });
 
   startCollectingInput({ input });
@@ -123,8 +125,9 @@ export const boot: Boot = async ({ container, isOther }) => {
       channel.emit("chat message", { type: "enter-prey" });
     }
 
-    if (type === "enter-prey" && isOther) {
+    if (type === "enter-prey" && isOther && !preyCreated) {
       prey = await makePrey({ ...settings.preySettings, world });
+      preyCreated = true;
 
       scene.add(prey.rendering);
     }
@@ -141,9 +144,21 @@ export const boot: Boot = async ({ container, isOther }) => {
       console.log(data.position);
 
       if (prey && data.position) {
+        // prey.position.previous.x = prey.position.current.x;
+        // prey.position.previous.y = prey.position.current.y;
+        // prey.position.previous.z = prey.position.current.z;
+
         prey.position.current.x = data.position.x;
         prey.position.current.y = data.position.y;
         prey.position.current.z = data.position.z;
+        //
+        // prey.physics.rigidBody.setTranslation({
+        //   x: data.position.x,
+        //   y: data.position.y,
+        //   z: data.position.z,
+        // }, true);
+
+        // console.log(prey.physics.rigidBody.translation())
       }
     } else {
       setUpOther(data);
